@@ -8,24 +8,58 @@ levels = [
         order: 4,
         operator: '+',
         cages: [
+            {
+                cells: [
+                ],
+                hint: {
+                    value: 3,
+                    cell: [0, 0],
+                }
+            },
         ],
     },
     {
         order: 4,
         operator: '+',
         cages: [
+            {
+                cells: [
+                    [0, 0],
+                    [],
+                ],
+                hint: {
+                    value: 3,
+                    cell: [0, 0],
+                }
+            },
         ],
     },
     {
         order: 4,
         operator: '*',
         cages: [
+            {
+                cells: [
+                ],
+                hint: {
+                    value: 3,
+                    cell: [0, 0],
+                }
+            },
         ],
     },
     {
         order: 4,
         operator: '*',
         cages: [
+            {
+                cells: [
+                ],
+                hint: {
+                    value: 3,
+                    cell: [0, 0],
+                }
+            },
         ],
     },
 ];
@@ -119,7 +153,10 @@ class TitleScene extends Phaser.Scene {
 
 class PlayScene extends Phaser.Scene {
 
-    group = null;
+    level = null;
+    table = null;
+    operator = null;
+    cages = null;
 
     constructor() {
         super('play');
@@ -131,7 +168,32 @@ class PlayScene extends Phaser.Scene {
         this.graphics = this.add.graphics();
 
         /** Level **/
-        const level = levels[currentLevel];
+        this.level = levels[currentLevel];
+
+        /** Table **/
+        this.table = [];
+        for (let i=0; i<this.level.order; i++) {
+            this.table[i] = [];
+            for (let j=0; j<this.level.order; j++) {
+                this.table[i].push({
+                    cage: null,
+                    value: null,
+                    hint: null,
+                });
+            }
+        }
+
+        /** Cages **/
+        for (const cage of this.level.cages) {
+            const hint = cage.hint;
+            for (const cell of cage.cells) {
+                const tableCell = this.table[cell[0], cell[1]];
+                tableCell.cage = cage;
+                if (hint != null) {
+                    tableCell.hint = hint;
+                }
+            }
+        }
 
         /** Controls **/
         this.keyControls = this.input.keyboard.addKeys({
@@ -147,6 +209,14 @@ class PlayScene extends Phaser.Scene {
         if (this.keyControls.end.isDown) {
             this.end();
         }
+    }
+
+    verifyCage(cage) {
+
+    }
+
+    verifySolution() {
+
     }
 
     end() {
