@@ -157,6 +157,8 @@ class PlayScene extends Phaser.Scene {
     table = null;
     operator = null;
     cages = null;
+    cellLength = 80;
+    selectedCell = null;
 
     constructor() {
         super('play');
@@ -195,12 +197,49 @@ class PlayScene extends Phaser.Scene {
             }
         }
 
+        /** Cells **/
+        const paddedCellLength = this.cellLength + 4;
+        for (let i in this.table) {
+            const row = this.table[i];
+            for (let j in row) {
+                const position = new Phaser.Math.Vector2(100 + i*paddedCellLength, 100 + j*paddedCellLength);
+                this.table[i][j].cell = this.createCell(position, i, j);
+            }
+        }
+
         /** Controls **/
         this.keyControls = this.input.keyboard.addKeys({
             'end': Phaser.Input.Keyboard.KeyCodes.E,
         });
 
         this.input.mouse.disableContextMenu();
+    }
+
+    createCell(position, row, column) {
+        const that = this;
+        const cellColor = 0x888888;
+        let cell = this.add.rectangle(position.x, position.y, this.cellLength, this.cellLength, cellColor);
+
+        cell.setInteractive();
+        // cell.setStrokeStyle(1, 0xFFFFFF);
+        cell.data = {
+            state: 'off',
+            row,
+            column,
+        };
+
+        cell.on('pointerdown', function (pointer, localX, localY, event) {
+            if (cell.data.state === 'off') {
+                cell.data.state = 'on';
+                cell.setFillStyle(0xeeeeee);
+                console.log(`(${cell.data.row}, ${cell.data.column})`);
+            } else {
+                cell.data.state = 'off';
+                cell.setFillStyle(cellColor);
+            }
+        });
+
+        return cell;
     }
 
     update() {
