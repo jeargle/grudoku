@@ -158,6 +158,7 @@ class PlayScene extends Phaser.Scene {
     operator = null;
     cages = null;
     cellLength = 80;
+    cellColor = 0x888888;
     selectedCell = null;
 
     constructor() {
@@ -217,8 +218,21 @@ class PlayScene extends Phaser.Scene {
 
     createCell(position, row, column) {
         const that = this;
-        const cellColor = 0x888888;
-        let cell = this.add.rectangle(position.x, position.y, this.cellLength, this.cellLength, cellColor);
+        let cell = this.add.rectangle(
+            position.x,
+            position.y,
+            this.cellLength,
+            this.cellLength,
+            this.cellColor
+        );
+
+        let text = this.add.text(
+            position.x,
+            position.y,
+            '.',
+            {font: '30px Courier',
+             fill: '#ffffff'}
+        ).setOrigin(0.5, 0.5);
 
         cell.setInteractive();
         // cell.setStrokeStyle(1, 0xFFFFFF);
@@ -226,24 +240,42 @@ class PlayScene extends Phaser.Scene {
             state: 'off',
             row,
             column,
+            text,
         };
 
         cell.on('pointerdown', function (pointer, localX, localY, event) {
+            that.deactivateCell();
             if (cell.data.state === 'off') {
-                cell.data.state = 'on';
-                cell.setFillStyle(0xeeeeee);
-                console.log(`(${cell.data.row}, ${cell.data.column})`);
-            } else {
-                cell.data.state = 'off';
-                cell.setFillStyle(cellColor);
+                that.activateCell(cell);
             }
         });
 
         return cell;
     }
 
+    activateCell(cell) {
+        cell.data.state = 'on';
+        cell.setFillStyle(0xdddddd);
+        this.selectedCell = cell;
+        cell.data.text.text = '_';
+
+        console.log(`(${cell.data.row}, ${cell.data.column})`);
+        console.log(cell.data.text.text);
+    }
+
+    deactivateCell() {
+        if (this.selectedCell == null) {
+            return;
+        }
+
+        this.selectedCell.data.state = 'off';
+        this.selectedCell.setFillStyle(this.cellColor);
+        this.selectedCell.data.text.text = '.';
+        this.selectedCell = null;
+    }
+
     update() {
-        console.log('[PLAY] update');
+        // console.log('[PLAY] update');
 
         if (this.keyControls.end.isDown) {
             this.end();
