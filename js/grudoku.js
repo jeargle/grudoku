@@ -210,6 +210,16 @@ class PlayScene extends Phaser.Scene {
 
         /** Controls **/
         this.keyControls = this.input.keyboard.addKeys({
+            'zero': Phaser.Input.Keyboard.KeyCodes.ZERO,
+            'one': Phaser.Input.Keyboard.KeyCodes.ONE,
+            'two': Phaser.Input.Keyboard.KeyCodes.TWO,
+            'three': Phaser.Input.Keyboard.KeyCodes.THREE,
+            'four': Phaser.Input.Keyboard.KeyCodes.FOUR,
+            'five': Phaser.Input.Keyboard.KeyCodes.FIVE,
+            'six': Phaser.Input.Keyboard.KeyCodes.SIX,
+            'seven': Phaser.Input.Keyboard.KeyCodes.SEVEN,
+            'eight': Phaser.Input.Keyboard.KeyCodes.EIGHT,
+            'nine': Phaser.Input.Keyboard.KeyCodes.NINE,
             'end': Phaser.Input.Keyboard.KeyCodes.E,
         });
 
@@ -257,7 +267,9 @@ class PlayScene extends Phaser.Scene {
         cell.data.state = 'on';
         cell.setFillStyle(0xdddddd);
         this.selectedCell = cell;
-        cell.data.text.text = '_';
+        if (cell.data.text.text === '.') {
+            cell.data.text.text = '_';
+        }
 
         console.log(`(${cell.data.row}, ${cell.data.column})`);
         console.log(cell.data.text.text);
@@ -270,12 +282,56 @@ class PlayScene extends Phaser.Scene {
 
         this.selectedCell.data.state = 'off';
         this.selectedCell.setFillStyle(this.cellColor);
-        this.selectedCell.data.text.text = '.';
+        if (this.selectedCell.data.text.text === '_') {
+            this.selectedCell.data.text.text = '.';
+        }
         this.selectedCell = null;
     }
 
     update() {
         // console.log('[PLAY] update');
+
+        if (this.selectedCell != null) {
+            // if (this.keyControls.zero.isDown && this.level.order >= 0) {
+            //     this.selectedCell.data.text.text = '0';
+            // }
+
+            if (this.keyControls.one.isDown && this.level.order >= 1) {
+                this.selectedCell.data.text.text = '1';
+            }
+
+            if (this.keyControls.two.isDown && this.level.order >= 2) {
+                this.selectedCell.data.text.text = '2';
+            }
+
+            if (this.keyControls.three.isDown && this.level.order >= 3) {
+                this.selectedCell.data.text.text = '3';
+            }
+
+            if (this.keyControls.four.isDown && this.level.order >= 4) {
+                this.selectedCell.data.text.text = '4';
+            }
+
+            if (this.keyControls.five.isDown && this.level.order >= 5) {
+                this.selectedCell.data.text.text = '5';
+            }
+
+            if (this.keyControls.six.isDown && this.level.order >= 6) {
+                this.selectedCell.data.text.text = '6';
+            }
+
+            if (this.keyControls.seven.isDown && this.level.order >= 7) {
+                this.selectedCell.data.text.text = '7';
+            }
+
+            if (this.keyControls.eight.isDown && this.level.order >= 8) {
+                this.selectedCell.data.text.text = '8';
+            }
+
+            if (this.keyControls.nine.isDown && this.level.order >= 9) {
+                this.selectedCell.data.text.text = '9';
+            }
+        }
 
         if (this.keyControls.end.isDown) {
             this.end();
