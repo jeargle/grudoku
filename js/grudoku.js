@@ -160,15 +160,18 @@ class PlayScene extends Phaser.Scene {
         this.level = levels[currentLevel];
 
         /** Table **/
-        this.table = [];
+        this.table = Array(this.level.order);
+        let usedCageIds = new Set();
         for (let i=0; i<this.level.order; i++) {
-            this.table[i] = [];
-            for (let j=0; j<this.level.order; j++) {
+            this.table[i] = Array(this.level.order);
+            for (let j=this.level.order-1; j>=0; j--) {
                 const cageId = this.level.cells[i][j];
-                this.table[i].push({
-                    cageId,
-                    clue: this.level.clues[cageId],
-                });
+                let clue = null;
+                if (!usedCageIds.has(cageId)) {
+                    clue = this.level.clues[cageId];
+                    usedCageIds.add(cageId);
+                }
+                this.table[i][j] = {cageId, clue};
             }
         }
 
@@ -180,8 +183,8 @@ class PlayScene extends Phaser.Scene {
             const row = this.table[i];
             for (let j in row) {
                 const position = new Phaser.Math.Vector2(
-                    100 + i*paddedCellLength,
-                    100 + j*paddedCellLength
+                    100 + j*paddedCellLength,
+                    100 + i*paddedCellLength
                 );
                 this.table[i][j].cell = this.createCell(position, i, j);
             }
@@ -231,6 +234,7 @@ class PlayScene extends Phaser.Scene {
             row,
             column,
             text,
+            clue: this.table[row][column].clue,
         };
 
         cell.on('pointerdown', function (pointer, localX, localY, event) {
@@ -252,7 +256,7 @@ class PlayScene extends Phaser.Scene {
         }
 
         console.log(`(${cell.data.row}, ${cell.data.column})`);
-        console.log(cell.data.text.text);
+        console.log(`${cell.data.text.text} - ${cell.data.clue}`);
     }
 
     deactivateCell() {
