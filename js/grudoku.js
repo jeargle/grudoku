@@ -10,10 +10,98 @@ levels = [
         cages: [
             {
                 cells: [
+                    [0, 0],
+                    [0, 1],
                 ],
-                hint: {
+                clue: {
+                    value: 4,
+                    cell: [0, 1],
+                }
+            },
+            {
+                cells: [
+                    [0, 2],
+                    [0, 3],
+                ],
+                clue: {
+                    value: 6,
+                    cell: [0, 3],
+                }
+            },
+            {
+                cells: [
+                    [1, 0],
+                    [2, 0],
+                ],
+                clue: {
+                    value: 6,
+                    cell: [1, 0],
+                }
+            },
+            {
+                cells: [
+                    [1, 1],
+                ],
+                clue: {
+                    value: 1,
+                    cell: [1, 1],
+                }
+            },
+            {
+                cells: [
+                    [1, 2],
+                ],
+                clue: {
+                    value: 2,
+                    cell: [1, 2],
+                }
+            },
+            {
+                cells: [
+                    [1, 3],
+                    [2, 3],
+                ],
+                clue: {
+                    value: 4,
+                    cell: [1, 3],
+                }
+            },
+            {
+                cells: [
+                    [2, 1],
+                ],
+                clue: {
+                    value: 4,
+                    cell: [2, 1],
+                }
+            },
+            {
+                cells: [
+                    [2, 2],
+                ],
+                clue: {
                     value: 3,
-                    cell: [0, 0],
+                    cell: [2, 2],
+                }
+            },
+            {
+                cells: [
+                    [3, 0],
+                    [3, 1],
+                ],
+                clue: {
+                    value: 5,
+                    cell: [3, 1],
+                }
+            },
+            {
+                cells: [
+                    [3, 2],
+                    [3, 3],
+                ],
+                clue: {
+                    value: 5,
+                    cell: [3, 3],
                 }
             },
         ],
@@ -27,7 +115,7 @@ levels = [
                     [0, 0],
                     [],
                 ],
-                hint: {
+                clue: {
                     value: 3,
                     cell: [0, 0],
                 }
@@ -41,7 +129,7 @@ levels = [
             {
                 cells: [
                 ],
-                hint: {
+                clue: {
                     value: 3,
                     cell: [0, 0],
                 }
@@ -55,7 +143,7 @@ levels = [
             {
                 cells: [
                 ],
-                hint: {
+                clue: {
                     value: 3,
                     cell: [0, 0],
                 }
@@ -181,19 +269,19 @@ class PlayScene extends Phaser.Scene {
                 this.table[i].push({
                     cage: null,
                     value: null,
-                    hint: null,
+                    clue: null,
                 });
             }
         }
 
         /** Cages **/
         for (const cage of this.level.cages) {
-            const hint = cage.hint;
+            const clue = cage.clue;
             for (const cell of cage.cells) {
-                const tableCell = this.table[cell[0], cell[1]];
+                const tableCell = this.table[cell[0]][cell[1]];
                 tableCell.cage = cage;
-                if (hint != null) {
-                    tableCell.hint = hint;
+                if (clue != null) {
+                    tableCell.clue = clue;
                 }
             }
         }
@@ -227,6 +315,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     createCell(position, row, column) {
+        // console.log(`(${position.x}, ${position.y}), ${row}, ${column}`);
         const that = this;
         let cell = this.add.rectangle(
             position.x,
