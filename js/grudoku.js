@@ -1,7 +1,7 @@
 let score, currentLevel, levels, game;
 
 score = 0;
-currentLevel = 0;
+currentLevel = 1;
 
 levels = [
     {
@@ -19,12 +19,12 @@ levels = [
         order: 4,
         operator: '+',
         cells: [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
+            [0, 0, 1, 2],
+            [0, 1, 1, 2],
+            [3, 4, 4, 5],
+            [3, 4, 5, 5],
         ],
-        clues: []
+        clues: [7, 8, 5, 7, 4, 9]
     },
     {
         order: 4,
