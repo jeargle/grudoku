@@ -7,146 +7,87 @@ levels = [
     {
         order: 4,
         operator: '+',
+        cells: [
+            [0, 0, 1, 1],
+            [2, 3, 4, 5],
+            [2, 6, 7, 5],
+            [8, 8, 9, 9],
+        ],
         cages: [
             {
-                cells: [
-                    [0, 0],
-                    [0, 1],
-                ],
-                clue: {
-                    value: 4,
-                    cell: [0, 1],
-                }
+                clue: 4
             },
             {
-                cells: [
-                    [0, 2],
-                    [0, 3],
-                ],
-                clue: {
-                    value: 6,
-                    cell: [0, 3],
-                }
+                clue: 6
             },
             {
-                cells: [
-                    [1, 0],
-                    [2, 0],
-                ],
-                clue: {
-                    value: 6,
-                    cell: [1, 0],
-                }
+                clue: 6
             },
             {
-                cells: [
-                    [1, 1],
-                ],
-                clue: {
-                    value: 1,
-                    cell: [1, 1],
-                }
+                clue: 1
             },
             {
-                cells: [
-                    [1, 2],
-                ],
-                clue: {
-                    value: 2,
-                    cell: [1, 2],
-                }
+                clue: 2
             },
             {
-                cells: [
-                    [1, 3],
-                    [2, 3],
-                ],
-                clue: {
-                    value: 4,
-                    cell: [1, 3],
-                }
+                clue: 4
             },
             {
-                cells: [
-                    [2, 1],
-                ],
-                clue: {
-                    value: 4,
-                    cell: [2, 1],
-                }
+                clue: 4
             },
             {
-                cells: [
-                    [2, 2],
-                ],
-                clue: {
-                    value: 3,
-                    cell: [2, 2],
-                }
+                clue: 3
             },
             {
-                cells: [
-                    [3, 0],
-                    [3, 1],
-                ],
-                clue: {
-                    value: 5,
-                    cell: [3, 1],
-                }
+                clue: 5
             },
             {
-                cells: [
-                    [3, 2],
-                    [3, 3],
-                ],
-                clue: {
-                    value: 5,
-                    cell: [3, 3],
-                }
+                clue: 5
             },
         ],
     },
     {
         order: 4,
         operator: '+',
+        cells: [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ],
         cages: [
             {
-                cells: [
-                    [0, 0],
-                    [],
-                ],
-                clue: {
-                    value: 3,
-                    cell: [0, 0],
-                }
+                clue: 3
             },
         ],
     },
     {
         order: 4,
         operator: '*',
+        cells: [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ],
         cages: [
             {
-                cells: [
-                ],
-                clue: {
-                    value: 3,
-                    cell: [0, 0],
-                }
+                clue: 3
             },
         ],
     },
     {
         order: 4,
         operator: '*',
+        cells: [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+        ],
         cages: [
             {
-                cells: [
-                ],
-                clue: {
-                    value: 3,
-                    cell: [0, 0],
-                }
+                clue: 3
             },
         ],
     },
@@ -266,23 +207,12 @@ class PlayScene extends Phaser.Scene {
         for (let i=0; i<this.level.order; i++) {
             this.table[i] = [];
             for (let j=0; j<this.level.order; j++) {
+                const cageId = this.level.cells[i][j];
                 this.table[i].push({
-                    cage: null,
-                    value: null,
-                    clue: null,
+                    cageId,
+                    cage: this.level.cages[cageId],
+                    clue: this.level.cages[cageId].clue
                 });
-            }
-        }
-
-        /** Cages **/
-        for (const cage of this.level.cages) {
-            const clue = cage.clue;
-            for (const cell of cage.cells) {
-                const tableCell = this.table[cell[0]][cell[1]];
-                tableCell.cage = cage;
-                if (clue != null) {
-                    tableCell.clue = clue;
-                }
             }
         }
 
@@ -291,7 +221,10 @@ class PlayScene extends Phaser.Scene {
         for (let i in this.table) {
             const row = this.table[i];
             for (let j in row) {
-                const position = new Phaser.Math.Vector2(100 + i*paddedCellLength, 100 + j*paddedCellLength);
+                const position = new Phaser.Math.Vector2(
+                    100 + i*paddedCellLength,
+                    100 + j*paddedCellLength
+                );
                 this.table[i][j].cell = this.createCell(position, i, j);
             }
         }
