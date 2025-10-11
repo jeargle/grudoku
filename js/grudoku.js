@@ -13,38 +13,7 @@ levels = [
             [2, 6, 7, 5],
             [8, 8, 9, 9],
         ],
-        cages: [
-            {
-                clue: 4
-            },
-            {
-                clue: 6
-            },
-            {
-                clue: 6
-            },
-            {
-                clue: 1
-            },
-            {
-                clue: 2
-            },
-            {
-                clue: 4
-            },
-            {
-                clue: 4
-            },
-            {
-                clue: 3
-            },
-            {
-                clue: 5
-            },
-            {
-                clue: 5
-            },
-        ],
+        clues: [4, 6, 6, 1, 2, 4, 4, 3, 5, 5]
     },
     {
         order: 4,
@@ -55,11 +24,7 @@ levels = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ],
-        cages: [
-            {
-                clue: 3
-            },
-        ],
+        clues: []
     },
     {
         order: 4,
@@ -70,11 +35,7 @@ levels = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ],
-        cages: [
-            {
-                clue: 3
-            },
-        ],
+        clues: []
     },
     {
         order: 4,
@@ -85,11 +46,7 @@ levels = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ],
-        cages: [
-            {
-                clue: 3
-            },
-        ],
+        clues: []
     },
 ];
 
@@ -210,11 +167,12 @@ class PlayScene extends Phaser.Scene {
                 const cageId = this.level.cells[i][j];
                 this.table[i].push({
                     cageId,
-                    cage: this.level.cages[cageId],
-                    clue: this.level.cages[cageId].clue
+                    clue: this.level.clues[cageId],
                 });
             }
         }
+
+        /** Cages **/
 
         /** Cells **/
         const paddedCellLength = this.cellLength + 4;
