@@ -227,6 +227,18 @@ class PlayScene extends Phaser.Scene {
              fill: '#ffffff'}
         ).setOrigin(0.5, 0.5);
 
+        const clue = this.table[row][column].clue;
+        let clueText = null;
+        if (clue != null) {
+            clueText = this.add.text(
+                position.x + 40,
+                position.y - 30,
+                `${clue}`,
+                {font: '20px Courier',
+                 fill: '#ffffff'}
+            ).setOrigin(1.0, 0.5);
+        }
+
         cell.setInteractive();
         // cell.setStrokeStyle(1, 0xFFFFFF);
         cell.data = {
@@ -234,7 +246,8 @@ class PlayScene extends Phaser.Scene {
             row,
             column,
             text,
-            clue: this.table[row][column].clue,
+            clue,
+            clueText,
         };
 
         cell.on('pointerdown', function (pointer, localX, localY, event) {
