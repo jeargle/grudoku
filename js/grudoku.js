@@ -1,54 +1,5 @@
-let score, currentLevel, levels, game;
-
-score = 0;
-currentLevel = 1;
-
-levels = [
-    {
-        order: 4,
-        operator: '+',
-        cells: [
-            [0, 0, 1, 1],
-            [2, 3, 4, 5],
-            [2, 6, 7, 5],
-            [8, 8, 9, 9],
-        ],
-        clues: [4, 6, 6, 1, 2, 4, 4, 3, 5, 5]
-    },
-    {
-        order: 4,
-        operator: '+',
-        cells: [
-            [0, 0, 1, 2],
-            [0, 1, 1, 2],
-            [3, 4, 4, 5],
-            [3, 4, 5, 5],
-        ],
-        clues: [7, 8, 5, 7, 4, 9]
-    },
-    {
-        order: 4,
-        operator: '*',
-        cells: [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-        ],
-        clues: []
-    },
-    {
-        order: 4,
-        operator: '*',
-        cells: [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-        ],
-        clues: []
-    },
-];
+let score = 0;
+let currentLevel = 0;
 
 
 class BootScene extends Phaser.Scene {
@@ -87,6 +38,9 @@ class LoadScene extends Phaser.Scene {
         this.add.text(80, 160, 'loading...',
                       {font: '30px Courier',
                        fill: '#ffffff'});
+
+        // Load levels
+        this.load.json('levels', 'assets/levels.json');
 
         // Load images
 
@@ -157,6 +111,7 @@ class PlayScene extends Phaser.Scene {
         this.graphics = this.add.graphics();
 
         /** Level **/
+        const levels = this.cache.json.get('levels');
         this.level = levels[currentLevel];
 
         /** Table **/
@@ -393,5 +348,5 @@ const gameConfig = {
     ]
 };
 
-game = new Phaser.Game(gameConfig);
+let game = new Phaser.Game(gameConfig);
 game.scene.start('boot', { someData: '...arbitrary data' });
