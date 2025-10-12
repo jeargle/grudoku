@@ -118,6 +118,7 @@ class PlayScene extends Phaser.Scene {
 
         /** Table **/
         this.table = Array(this.level.order);
+        this.cages = {};
         let usedCageIds = new Set();
         for (i=0; i<this.level.order; i++) {
             this.table[i] = Array(this.level.order);
@@ -128,8 +129,14 @@ class PlayScene extends Phaser.Scene {
                 if (!usedCageIds.has(cageId)) {
                     clue = this.level.clues[cageId];
                     usedCageIds.add(cageId);
+                    this.cages[cageId] = {
+                        state: 'active',
+                        coords: [],
+                        clue
+                    };
                 }
                 this.table[i][j] = {cageId, clue};
+                this.cages[cageId].coords.push([i, j]);
             }
         }
 
@@ -366,11 +373,70 @@ class PlayScene extends Phaser.Scene {
     }
 
     verifyCage(cage) {
+        let baseVal, opFunc;
 
+        if (this.level.operator === '+') {
+            baseVal = 0;
+            opFunc = (a, b) => parseInt(a) + parseInt(b);
+        } else if (this.level.operator === '*') {
+            baseVal = 1;
+            opFunc = (a, b) => parseInt(a) * parseInt(b);
+        }
+
+        const values = cage.coords.map(coord => {
+            return this.table[coord[0]][coord[1]].cell.data.text.text;
+        });
+
+        if (values.includes('.')) {
+            cage.state = 'active';
+        }
+
+        const total = values.reduce(accumulator, currVal => {
+            opFunc(accumulator, currVal);
+        }, baseVal);
+
+        if (total === cage.clue) {
+            cage.state = 'done';
+        } else {
+            cage.state = 'error';
+        }
     }
 
     verifySolution() {
+        let i, j;
+        let state = 'done';
 
+        for (cage of this.cages) {
+            if (cage.state === 'error') {
+                this.state = 'error';
+            } else if (cage.state === 'active') {
+                this.state = 'active';
+                return;
+            }
+        }
+
+        let usedRowElements = new Set();
+        let usedColumnElements = new Set();
+        let rowElement, columnElement;
+        for (i=0; i<this.level.order; i++) {
+            usedRowElements.clear();
+            usedColumnElements.clear();
+            for (j=0; j<this.level.order; j++) {
+                rowElement = this.table[i][j].cell.data.text.text;
+                if (usedRowElements.has(rowElement)) {
+                    this.state = 'error';
+                } else {
+                    usedRowElements.add(rowElement);
+                }
+
+                columnElement = this.table[j][i].cell.data.text.text;
+                if (usedColumnElements.has(columnElement)) {
+                    this.state = 'error';
+                } else {
+                    usedColumnElements.add(columnElement);
+                }
+            }
+        }
     }
 
     end() {
