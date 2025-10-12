@@ -324,47 +324,69 @@ class PlayScene extends Phaser.Scene {
 
     update() {
         // console.log('[PLAY] update');
+        let x, y, cageId, cage, moveAccepted;
 
         if (this.selectedCell != null) {
+            x = this.selectedCell.data.row;
+            y = this.selectedCell.data.column;
+            cageId = this.table[x][y].cageId;
+            moveAccepted = false;
+
             // if (this.keyControls.zero.isDown && this.level.order >= 0) {
             //     this.selectedCell.data.text.text = '0';
             // }
 
             if (this.keyControls.one.isDown && this.level.order >= 1) {
                 this.selectedCell.data.text.text = '1';
+                moveAccepted = true;
             }
 
             if (this.keyControls.two.isDown && this.level.order >= 2) {
                 this.selectedCell.data.text.text = '2';
+                moveAccepted = true;
             }
 
             if (this.keyControls.three.isDown && this.level.order >= 3) {
                 this.selectedCell.data.text.text = '3';
+                moveAccepted = true;
             }
 
             if (this.keyControls.four.isDown && this.level.order >= 4) {
                 this.selectedCell.data.text.text = '4';
+                moveAccepted = true;
             }
 
             if (this.keyControls.five.isDown && this.level.order >= 5) {
                 this.selectedCell.data.text.text = '5';
+                moveAccepted = true;
             }
 
             if (this.keyControls.six.isDown && this.level.order >= 6) {
                 this.selectedCell.data.text.text = '6';
+                moveAccepted = true;
             }
 
             if (this.keyControls.seven.isDown && this.level.order >= 7) {
                 this.selectedCell.data.text.text = '7';
+                moveAccepted = true;
             }
 
             if (this.keyControls.eight.isDown && this.level.order >= 8) {
                 this.selectedCell.data.text.text = '8';
+                moveAccepted = true;
             }
 
             if (this.keyControls.nine.isDown && this.level.order >= 9) {
                 this.selectedCell.data.text.text = '9';
+                moveAccepted = true;
             }
+
+            if (moveAccepted) {
+                this.verifyCage(cageId);
+                const levelDone = this.verifySolution();
+                console.log(`levelDone: ${levelDone}`);
+            }
+
         }
 
         if (this.keyControls.end.isDown) {
@@ -372,8 +394,10 @@ class PlayScene extends Phaser.Scene {
         }
     }
 
-    verifyCage(cage) {
+    verifyCage(cageId) {
+        console.log(`verifyCage(${cageId})`);
         let baseVal, opFunc;
+        const cage = this.cages[cageId];
 
         if (this.level.operator === '+') {
             baseVal = 0;
@@ -389,29 +413,40 @@ class PlayScene extends Phaser.Scene {
 
         if (values.includes('.')) {
             cage.state = 'active';
+            console.log(`cage.state: ${cage.state}`);
+            return cage.state;
         }
 
-        const total = values.reduce(accumulator, currVal => {
-            opFunc(accumulator, currVal);
+        const total = values.reduce((accumulator, currVal) => {
+            return opFunc(accumulator, currVal);
         }, baseVal);
+
+        console.log(values);
+        console.log(total);
+        console.log(cage.clue);
 
         if (total === cage.clue) {
             cage.state = 'done';
         } else {
             cage.state = 'error';
         }
+
+        console.log(`cage.state: ${cage.state}`);
+        return cage.state;
     }
 
     verifySolution() {
-        let i, j;
+        console.log('verifySolution()');
+        let i, j, cage;
         let state = 'done';
 
-        for (cage of this.cages) {
+        for (let cageId in this.cages) {
+            cage = this.cages[cageId];
             if (cage.state === 'error') {
                 this.state = 'error';
             } else if (cage.state === 'active') {
                 this.state = 'active';
-                return;
+                return this.state;
             }
         }
 
@@ -437,6 +472,8 @@ class PlayScene extends Phaser.Scene {
                 }
             }
         }
+
+        return this.state;
     }
 
     end() {
