@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 3;
+let currentLevel = 0;
 
 
 class BootScene extends Phaser.Scene {
@@ -382,9 +382,10 @@ class PlayScene extends Phaser.Scene {
             }
 
             if (moveAccepted) {
-                this.verifyCage(cageId);
-                const levelDone = this.verifySolution();
-                console.log(`levelDone: ${levelDone}`);
+                const cageState = this.verifyCage(cageId);
+                const levelState = this.verifySolution();
+                console.log(`cageState: ${cageState}`);
+                console.log(`levelState: ${levelState}`);
             }
 
         }
@@ -413,7 +414,6 @@ class PlayScene extends Phaser.Scene {
 
         if (values.includes('.')) {
             cage.state = 'active';
-            console.log(`cage.state: ${cage.state}`);
             return cage.state;
         }
 
@@ -431,7 +431,6 @@ class PlayScene extends Phaser.Scene {
             cage.state = 'error';
         }
 
-        console.log(`cage.state: ${cage.state}`);
         return cage.state;
     }
 
@@ -443,7 +442,7 @@ class PlayScene extends Phaser.Scene {
         for (let cageId in this.cages) {
             cage = this.cages[cageId];
             if (cage.state === 'error') {
-                this.state = 'error';
+                state = 'error';
             } else if (cage.state === 'active') {
                 this.state = 'active';
                 return this.state;
@@ -460,6 +459,7 @@ class PlayScene extends Phaser.Scene {
                 rowElement = this.table[i][j].cell.data.text.text;
                 if (usedRowElements.has(rowElement)) {
                     this.state = 'error';
+                    return this.state;
                 } else {
                     usedRowElements.add(rowElement);
                 }
@@ -467,12 +467,14 @@ class PlayScene extends Phaser.Scene {
                 columnElement = this.table[j][i].cell.data.text.text;
                 if (usedColumnElements.has(columnElement)) {
                     this.state = 'error';
+                    return this.state;
                 } else {
                     usedColumnElements.add(columnElement);
                 }
             }
         }
 
+        this.state = state;
         return this.state;
     }
 
