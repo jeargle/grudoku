@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 1;
+let currentLevel = 3;
 
 
 class BootScene extends Phaser.Scene {
@@ -196,7 +196,7 @@ class PlayScene extends Phaser.Scene {
                 position.x + 40,
                 position.y - 30,
                 `${clue}`,
-                {font: '20px Courier',
+                {font: '16px Courier',
                  fill: '#ffffff'}
             ).setOrigin(1.0, 0.5);
         }
