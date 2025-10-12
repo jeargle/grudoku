@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 0;
+let currentLevel = 1;
 
 
 class BootScene extends Phaser.Scene {
@@ -98,7 +98,8 @@ class PlayScene extends Phaser.Scene {
     operator = null;
     cages = null;
     cellLength = 80;
-    cellColor = 0x888888;
+    // cellColor = 0x888888;
+    cellColor = 0x333333;
     selectedCell = null;
 
     constructor() {
@@ -106,6 +107,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     create() {
+        let i, j;
         let that = this;
 
         this.graphics = this.add.graphics();
@@ -117,9 +119,10 @@ class PlayScene extends Phaser.Scene {
         /** Table **/
         this.table = Array(this.level.order);
         let usedCageIds = new Set();
-        for (let i=0; i<this.level.order; i++) {
+        for (i=0; i<this.level.order; i++) {
             this.table[i] = Array(this.level.order);
-            for (let j=this.level.order-1; j>=0; j--) {
+            // Loop backwards to assign clues to top-right cage cells.
+            for (j=this.level.order-1; j>=0; j--) {
                 const cageId = this.level.cells[i][j];
                 let clue = null;
                 if (!usedCageIds.has(cageId)) {
@@ -130,20 +133,24 @@ class PlayScene extends Phaser.Scene {
             }
         }
 
-        /** Cages **/
-
         /** Cells **/
         const paddedCellLength = this.cellLength + 4;
-        for (let i in this.table) {
-            const row = this.table[i];
-            for (let j in row) {
+        this.table.forEach((row, i) => {
+            row.forEach((el, j) => {
                 const position = new Phaser.Math.Vector2(
                     100 + j*paddedCellLength,
                     100 + i*paddedCellLength
                 );
                 this.table[i][j].cell = this.createCell(position, i, j);
-            }
-        }
+            });
+        });
+
+        /** Cages **/
+        this.table.forEach((row, i) => {
+            row.forEach((el, j) => {
+                this.table[i][j].bars = this.createBars(i, j);
+            });
+        });
 
         /** Controls **/
         this.keyControls = this.input.keyboard.addKeys({
@@ -195,7 +202,7 @@ class PlayScene extends Phaser.Scene {
         }
 
         cell.setInteractive();
-        // cell.setStrokeStyle(1, 0xFFFFFF);
+        cell.setStrokeStyle(4, 0x333333);
         cell.data = {
             state: 'off',
             row,
@@ -206,8 +213,9 @@ class PlayScene extends Phaser.Scene {
         };
 
         cell.on('pointerdown', function (pointer, localX, localY, event) {
+            const cellWasOff = cell.data.state === 'off';
             that.deactivateCell();
-            if (cell.data.state === 'off') {
+            if (cellWasOff) {
                 that.activateCell(cell);
             }
         });
@@ -215,9 +223,76 @@ class PlayScene extends Phaser.Scene {
         return cell;
     }
 
+    createBars(row, column) {
+        // console.log(`(${row}, ${column})`);
+        // console.log(this.table[row][column]);
+        let bars = {
+            north: null,
+            east: null,
+            south: null,
+            west: null
+        };
+
+        const element = this.table[row][column];
+        const cageId = element.cageId;
+        const cell = element.cell;
+        const x = cell.x;
+        const y = cell.y;
+        const lineColor = 0xFFFFFF;
+        const lineWidth = 2;
+
+        // North
+        if (row === 0) {
+            const startX = x - this.cellLength/2 - lineWidth;
+            const startY = y - this.cellLength/2 - lineWidth;
+            const endX = startX + this.cellLength + lineWidth*2;
+            const endY = startY;
+            bars.north = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
+            bars.north.lineWidth = lineWidth;
+        } else {
+            bars.north = this.table[row-1][column].bars.south;
+        }
+
+        // East
+        const eastCageId = this.table[row][column+1]?.cageId;
+        if (column === this.level.order-1 || cageId !== eastCageId) {
+            const startX = x + this.cellLength/2 + lineWidth;
+            const startY = y - this.cellLength/2 - lineWidth;
+            const endX = startX;
+            const endY = startY + this.cellLength + lineWidth*2;
+            bars.east = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
+            bars.east.lineWidth = lineWidth;
+        }
+
+        // South
+        const southCageId =  this.table[row+1]?.[column].cageId;
+        if (row === this.level.order-1 || cageId !== southCageId) {
+            const startX = x - this.cellLength/2 - lineWidth;
+            const startY = y + this.cellLength/2 + lineWidth;
+            const endX = startX + this.cellLength + lineWidth*2;
+            const endY = startY;
+            bars.south = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
+            bars.south.lineWidth = lineWidth;
+        }
+
+        // West
+        if (column === 0) {
+            const startX = x - this.cellLength/2 - lineWidth;
+            const startY = y - this.cellLength/2 - lineWidth;
+            const endX = startX;
+            const endY = startY + this.cellLength + lineWidth*2;
+            bars.west = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
+            bars.west.lineWidth = lineWidth;
+        } else {
+            bars.west = this.table[row][column-1].bars.east;
+        }
+
+        return bars;
+    }
+
     activateCell(cell) {
         cell.data.state = 'on';
-        cell.setFillStyle(0xdddddd);
+        cell.setFillStyle(0xbbbbbb);
         this.selectedCell = cell;
         if (cell.data.text.text === '.') {
             cell.data.text.text = '_';
