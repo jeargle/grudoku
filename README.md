@@ -4,6 +4,14 @@ grudoku
 group based puzzle game
 
 
+Controls
+--------
+
+* left-click - select/deselect table cell
+* 1-9 - enter number into selected cell
+* backspace - clear selected cell
+
+
 How to Run
 ----------
 
