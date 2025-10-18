@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 0;
+let currentLevel = 3;
 
 
 class BootScene extends Phaser.Scene {
@@ -171,6 +171,7 @@ class PlayScene extends Phaser.Scene {
             'seven': Phaser.Input.Keyboard.KeyCodes.SEVEN,
             'eight': Phaser.Input.Keyboard.KeyCodes.EIGHT,
             'nine': Phaser.Input.Keyboard.KeyCodes.NINE,
+            'backspace': Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
             'end': Phaser.Input.Keyboard.KeyCodes.E,
         });
 
@@ -381,11 +382,16 @@ class PlayScene extends Phaser.Scene {
                 moveAccepted = true;
             }
 
+            if (this.keyControls.backspace.isDown) {
+                this.selectedCell.data.text.text = '';
+                moveAccepted = true;
+            }
+
             if (moveAccepted) {
                 const cageState = this.verifyCage(cageId);
                 const levelState = this.verifySolution();
-                console.log(`cageState: ${cageState}`);
-                console.log(`levelState: ${levelState}`);
+                console.log(`  cageState: ${cageState}`);
+                console.log(`  levelState: ${levelState}`);
             }
 
         }
