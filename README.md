@@ -9,9 +9,10 @@ This game is an implementation of the puzzles described in *The Group Theory Puz
 Controls
 --------
 
-* left-click - select/deselect table cell
+* mouse left-click - select/deselect table cell
 * 1-9 - enter number into selected cell
 * backspace - clear selected cell
+* arrow keys - move cell selection
 
 
 How to Run
