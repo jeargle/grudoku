@@ -1,6 +1,10 @@
 let score = 0;
-let currentLevel = 3;
+let currentLevel = 7;
 
+
+function trueModulo(x, y) {
+  return ((x % y) + y) % y;
+}
 
 class BootScene extends Phaser.Scene {
     constructor() {
@@ -101,6 +105,7 @@ class PlayScene extends Phaser.Scene {
     // cellColor = 0x888888;
     cellColor = 0x333333;
     selectedCell = null;
+    nextMoveTime = 0;
 
     constructor() {
         super('play');
@@ -172,6 +177,10 @@ class PlayScene extends Phaser.Scene {
             'eight': Phaser.Input.Keyboard.KeyCodes.EIGHT,
             'nine': Phaser.Input.Keyboard.KeyCodes.NINE,
             'backspace': Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
             'end': Phaser.Input.Keyboard.KeyCodes.E,
         });
 
@@ -325,13 +334,18 @@ class PlayScene extends Phaser.Scene {
 
     update() {
         // console.log('[PLAY] update');
-        let x, y, cageId, cage, moveAccepted;
+        let row, col, nextRow, nextCol, cageId, cage, moveAccepted, changeCell;
+
+        const now = this.time.now;
 
         if (this.selectedCell != null) {
-            x = this.selectedCell.data.row;
-            y = this.selectedCell.data.column;
-            cageId = this.table[x][y].cageId;
+            row = this.selectedCell.data.row;
+            col = this.selectedCell.data.column;
+            nextRow = row;
+            nextCol = col;
+            cageId = this.table[row][col].cageId;
             moveAccepted = false;
+            changeCell = false
 
             // if (this.keyControls.zero.isDown && this.level.order >= 0) {
             //     this.selectedCell.data.text.text = '0';
@@ -394,6 +408,34 @@ class PlayScene extends Phaser.Scene {
                 console.log(`  levelState: ${levelState}`);
             }
 
+            if (now > this.nextMoveTime) {
+                if (this.keyControls.up.isDown) {
+                    changeCell = true;
+                    nextRow = trueModulo(nextRow - 1, this.level.order);
+                }
+
+                if (this.keyControls.down.isDown) {
+                    changeCell = true;
+                    nextRow = trueModulo(nextRow + 1, this.level.order);
+                }
+
+                if (this.keyControls.left.isDown) {
+                    changeCell = true;
+                    nextCol = trueModulo(nextCol - 1, this.level.order);
+                }
+
+                if (this.keyControls.right.isDown) {
+                    changeCell = true;
+                    nextCol = trueModulo(nextCol + 1, this.level.order);
+                }
+
+                if (changeCell) {
+                    const nextCell = this.table[nextRow][nextCol].cell;
+                    this.deactivateCell();
+                    this.activateCell(nextCell);
+                    this.nextMoveTime = now + 100;
+                }
+            }
         }
 
         if (this.keyControls.end.isDown) {
