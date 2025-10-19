@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 12;
+let currentLevel = 19;
 
 
 function trueModulo(x, y) {
