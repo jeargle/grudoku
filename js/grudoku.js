@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 7;
+let currentLevel = 12;
 
 
 function trueModulo(x, y) {
@@ -444,7 +444,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     verifyCage(cageId) {
-        console.log(`verifyCage(${cageId})`);
+        // console.log(`verifyCage(${cageId})`);
         let baseVal, opFunc;
         const cage = this.cages[cageId];
 
@@ -468,10 +468,6 @@ class PlayScene extends Phaser.Scene {
         const total = values.reduce((accumulator, currVal) => {
             return opFunc(accumulator, currVal);
         }, baseVal);
-
-        console.log(values);
-        console.log(total);
-        console.log(cage.clue);
 
         if (total === cage.clue) {
             cage.state = 'done';
