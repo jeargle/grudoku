@@ -1,5 +1,5 @@
 let score = 0;
-let currentLevel = 41;
+let currentLevel = 40;
 
 
 function trueModulo(x, y) {
@@ -120,6 +120,7 @@ class PlayScene extends Phaser.Scene {
         /** Level **/
         const levels = this.cache.json.get('levels');
         this.level = levels[currentLevel];
+        console.log(`this.level.uuid = ${this.level.uuid}`);
 
         /** Table **/
         this.table = Array(this.level.order);

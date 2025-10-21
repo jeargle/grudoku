@@ -1,5 +1,6 @@
 [
     {
+        "uuid": "2209124b-7858-42b1-be44-5ccb8e9c0dd1",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -11,6 +12,7 @@
         "clues": [4, 6, 6, 1, 2, 4, 4, 3, 5, 5]
     },
     {
+        "uuid": "1cd15306-0465-471e-825b-51170c904e19",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -22,6 +24,7 @@
         "clues": [7, 8, 5, 7, 4, 9]
     },
     {
+        "uuid": "47cd7573-d471-45f5-a580-5ee7400c2925",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -33,6 +36,7 @@
         "clues": [6, 5, 8, 6, 9, 6]
     },
     {
+        "uuid": "b3e091e9-238e-480f-9d00-6bf5c93b2fe3",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -44,6 +48,7 @@
         "clues": [3, 14, 15, 2, 3, 3]
     },
     {
+        "uuid": "ed2a569d-9602-47f0-9eb0-d14c81fd3f37",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -55,6 +60,7 @@
         "clues": [3, 25, 4, 6, 3]
     },
     {
+        "uuid": "ca1443dc-d40f-4974-9702-f636af3ad0c0",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -66,6 +72,7 @@
         "clues": [7, 4, 9, 6, 7, 7]
     },
     {
+        "uuid": "b625d6f3-254f-4686-8f0a-6bae7f6e35d0",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -77,6 +84,7 @@
         "clues": [2, 5, 6, 7, 4, 10, 5, 1]
     },
     {
+        "uuid": "a1da3133-0777-4208-bed4-9ef73a800e3b",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -88,6 +96,7 @@
         "clues": [3, 10, 4, 3, 5, 6, 7, 2]
     },
     {
+        "uuid": "8515b3dd-dd9d-40d8-9c3e-8ee3d5da94f9",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -99,6 +108,7 @@
         "clues": [4, 6, 6, 4, 7, 3, 7, 3]
     },
     {
+        "uuid": "f1f5971f-a620-4541-a985-de8d9852568d",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -110,6 +120,7 @@
         "clues": [3, 7, 7, 3, 4, 6, 4, 6]
     },
     {
+        "uuid": "340db571-deb3-4ce6-88c3-56015f084c91",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -121,6 +132,7 @@
         "clues": [5, 6, 6, 9, 7, 7]
     },
     {
+        "uuid": "074227ff-9174-4c18-a68e-56411d3f6a56",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -132,6 +144,7 @@
         "clues": [4, 9, 9, 9, 5, 4]
     },
     {
+        "uuid": "cf66da20-2cd1-483a-9532-a06db09ea22b",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -143,6 +156,7 @@
         "clues": [4, 7, 4, 10, 5, 3, 7]
     },
     {
+        "uuid": "cdfa566c-1047-4f6b-908c-f3ce53ba25ac",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -154,6 +168,7 @@
         "clues": [3, 8, 3, 11, 8, 4, 3]
     },
     {
+        "uuid": "727b68f0-5ef8-4ad5-a73a-39541cfe1071",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -165,6 +180,7 @@
         "clues": [10, 6, 6, 7, 3, 8]
     },
     {
+        "uuid": "06e7189e-372b-4df3-8852-40f446fee2a3",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -176,6 +192,7 @@
         "clues": [7, 8, 7, 9, 4, 5]
     },
     {
+        "uuid": "3be8d606-0f43-4c69-84ff-25133f3118fa",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -187,6 +204,7 @@
         "clues": [9, 6, 10, 4, 11]
     },
     {
+        "uuid": "74974443-2050-4627-85e8-997a64e01cd5",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -198,6 +216,7 @@
         "clues": [6, 9, 9, 10, 6]
     },
     {
+        "uuid": "3a135189-2c5d-4969-ab4a-5f3df4aeb063",
         "order": 4,
         "operator": "+",
         "cells": [
@@ -209,6 +228,7 @@
         "clues": []
     },
     {
+        "uuid": "ceb259aa-fdfc-4e71-9cbe-b6459db2684f",
         "order": 6,
         "operator": "+",
         "cells": [
@@ -222,6 +242,7 @@
         "clues": [8, 6, 7, 3, 10, 5, 8, 9, 7, 6, 8, 9, 6, 5, 4, 9, 5, 11]
     },
     {
+        "uuid": "d86df2e7-93f1-4bd3-8e95-8e1db45f858b",
         "order": 6,
         "operator": "+",
         "cells": [
@@ -235,6 +256,7 @@
         "clues": [8, 8, 13, 3, 9, 9, 6, 6, 4, 14, 10, 4, 7, 7, 11, 7]
     },
     {
+        "uuid": "13bd0d28-83ff-48f5-8651-6975a43389c2",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -246,6 +268,7 @@
         "clues": [12, 8, 2, 3, 2, 4, 12, 6]
     },
     {
+        "uuid": "c24e4ed1-e405-446a-bcaa-353425d82eb6",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -257,6 +280,7 @@
         "clues": [3, 8, 6, 12, 4, 2, 8, 3]
     },
     {
+        "uuid": "357c7e25-8575-4ce0-ba68-32c6f44a6227",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -268,6 +292,7 @@
         "clues": [8, 8, 12, 6, 12, 6]
     },
     {
+        "uuid": "6d2010ab-1de6-4ed7-84bf-370c1b4aa24e",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -279,6 +304,7 @@
         "clues": [24, 96, 18, 8]
     },
     {
+        "uuid": "a77f2e66-d3ad-4b98-b3b1-63ae8c7bce64",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -290,6 +316,7 @@
         "clues": [6, 27648, 2]
     },
     {
+        "uuid": "8723683a-f1d2-4382-859c-d3336cce4f94",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -301,6 +328,7 @@
         "clues": [2304, 16, 3, 3]
     },
     {
+        "uuid": "bbb590b7-e4b9-465d-8e0b-b8d6e6c4d6f0",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -312,6 +340,7 @@
         "clues": [4, 9, 8, 2, 3, 16, 4, 3]
     },
     {
+        "uuid": "26b141e6-ed91-4541-af94-d6206493c023",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -323,6 +352,7 @@
         "clues": [4, 8, 6, 3, 2, 24, 3, 4]
     },
     {
+        "uuid": "2ac5f040-dff7-46ad-906b-0b37c26aa16e",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -334,6 +364,7 @@
         "clues": [12, 2, 6, 3, 4, 8, 4, 6]
     },
     {
+        "uuid": "57feeb00-f43b-469a-b127-b9e787b0fe85",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -345,6 +376,7 @@
         "clues": [3, 8, 2, 4, 6, 12, 8, 3]
     },
     {
+        "uuid": "347645ba-be81-49af-8ed4-41b4d1be3dce",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -356,6 +388,7 @@
         "clues": [2, 16, 24, 12, 12, 3]
     },
     {
+        "uuid": "9c5cea80-5b47-4777-97cf-73e70e669abe",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -367,6 +400,7 @@
         "clues": [8, 9, 12, 6, 8, 8]
     },
     {
+        "uuid": "32bbb66f-ead9-48fc-9575-13d3fa802605",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -378,6 +412,7 @@
         "clues": [2, 36, 2, 12, 48, 2, 2]
     },
     {
+        "uuid": "b4cdf3ee-60a5-48d5-bee8-1d6766d123d0",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -389,6 +424,7 @@
         "clues": [12, 6, 4, 6, 6, 4, 8]
     },
     {
+        "uuid": "80f9ed49-2ac0-4135-a29d-e78eaeeceb33",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -400,6 +436,7 @@
         "clues": [6, 12, 6, 12, 8, 8]
     },
     {
+        "uuid": "16bb4176-8c49-440a-b4a5-4633d7a24d2d",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -411,6 +448,7 @@
         "clues": [4, 24, 8, 24, 6, 3]
     },
     {
+        "uuid": "33d07c29-962f-4dda-bcf4-bc563df76a66",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -422,6 +460,7 @@
         "clues": [2, 48, 24, 24, 6]
     },
     {
+        "uuid": "b6765101-8976-499b-93e0-2b0b3f3a6107",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -433,6 +472,7 @@
         "clues": [3, 24, 96, 24, 2]
     },
     {
+        "uuid": "29b0c02c-4379-4792-bccd-84ed515416d8",
         "order": 4,
         "operator": "*",
         "cells": [
@@ -444,6 +484,7 @@
         "clues": []
     },
     {
+        "uuid": "21b78dcd-823c-4888-9bf7-21b25d3ff5b7",
         "order": 6,
         "operator": "*",
         "cells": [
@@ -457,6 +498,7 @@
         "clues": [6, 18, 8, 20, 15, 6, 6, 2, 20, 24, 20, 2, 6, 15, 5, 18, 2, 24]
     },
     {
+        "uuid": "a275a337-6d70-48f9-b26e-821fdf65eff9",
         "order": 6,
         "operator": "*",
         "cells": [
@@ -470,6 +512,7 @@
         "clues": [30, 24, 24, 12, 3, 10, 12, 4, 5, 20, 18, 10, 12, 12, 5, 36]
     },
     {
+        "uuid": "2efeb7d6-83a8-4d71-bc88-ac3f03bbba30",
         "order": 6,
         "operator": "*",
         "cells": [
@@ -480,6 +523,12 @@
             [],
             []
         ],
+        "uuid0": "392566c0-7dd2-4595-841e-5571a15fa662",
+        "uuid1": "310390cf-0fc7-4cba-8859-3b2f84100f20",
+        "uuid2": "d24f08b5-1a25-4247-9797-5975961e84b4",
+        "uuid3": "a6b71e41-9d71-4522-acb3-f12f4437de1f",
+        "uuid4": "0cd15543-d1cd-4175-a4b7-8376bcf42c95",
+        "uuid5": "d6f7c122-eaa4-4ee0-88ee-be3d40cfbd58",
         "clues": []
     }
 ]
