@@ -1,6 +1,6 @@
 let score = 0;
 // let currentLevel = 40;
-let currentLevel = 3;
+let currentLevel = 2;
 
 
 function trueModulo(x, y) {
@@ -112,6 +112,8 @@ class PlayScene extends Phaser.Scene {
     cellLength = 80;
     // cellColor = 0x888888;
     cellColor = 0x333333;
+    cellEmptyText = '.';
+    cellActiveText = '_';
     selectedCell = null;
     nextMoveTime = 0;
 
@@ -220,7 +222,7 @@ class PlayScene extends Phaser.Scene {
         let text = this.add.text(
             position.x,
             position.y,
-            '.',
+            this.cellEmptyText,
             {font: '30px Courier',
              fill: '#ffffff'}
         ).setOrigin(0.5, 0.5);
@@ -330,8 +332,8 @@ class PlayScene extends Phaser.Scene {
         cell.data.state = 'on';
         cell.setFillStyle(0xbbbbbb);
         this.selectedCell = cell;
-        if (cell.data.text.text === '.') {
-            cell.data.text.text = '_';
+        if (cell.data.text.text === this.cellEmptyText) {
+            cell.data.text.text = this.cellActiveText;
         }
 
         console.log(`(${cell.data.row}, ${cell.data.column})`);
@@ -345,8 +347,8 @@ class PlayScene extends Phaser.Scene {
 
         this.selectedCell.data.state = 'off';
         this.selectedCell.setFillStyle(this.cellColor);
-        if (this.selectedCell.data.text.text === '_') {
-            this.selectedCell.data.text.text = '.';
+        if (this.selectedCell.data.text.text === this.cellActiveText) {
+            this.selectedCell.data.text.text = this.cellEmptyText;
         }
         this.selectedCell = null;
     }
@@ -416,7 +418,7 @@ class PlayScene extends Phaser.Scene {
             }
 
             if (this.keyControls.backspace.isDown) {
-                this.selectedCell.data.text.text = '';
+                this.selectedCell.data.text.text = this.cellActiveText;
                 moveAccepted = true;
             }
 
@@ -479,7 +481,8 @@ class PlayScene extends Phaser.Scene {
             return this.table[coord[0]][coord[1]].cell.data.text.text;
         });
 
-        if (values.includes('.')) {
+        if (values.includes(this.cellEmptyText) ||
+            values.includes(this.cellActiveText)) {
             cage.state = 'active';
             return cage.state;
         }
