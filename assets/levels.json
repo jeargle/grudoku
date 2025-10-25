@@ -258,7 +258,7 @@
     {
         "uuid": "13bd0d28-83ff-48f5-8651-6975a43389c2",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 1, 1, 2],
             [0, 3, 2, 2],
@@ -270,7 +270,7 @@
     {
         "uuid": "c24e4ed1-e405-446a-bcaa-353425d82eb6",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [2, 3, 3, 4],
@@ -282,7 +282,7 @@
     {
         "uuid": "357c7e25-8575-4ce0-ba68-32c6f44a6227",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 1, 1, 2],
             [0, 0, 3, 2],
@@ -294,7 +294,7 @@
     {
         "uuid": "6d2010ab-1de6-4ed7-84bf-370c1b4aa24e",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 1, 1, 1],
             [0, 0, 1, 2],
@@ -306,7 +306,7 @@
     {
         "uuid": "a77f2e66-d3ad-4b98-b3b1-63ae8c7bce64",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 0, 1],
             [1, 1, 1, 1],
@@ -318,7 +318,7 @@
     {
         "uuid": "8723683a-f1d2-4382-859c-d3336cce4f94",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
@@ -330,7 +330,7 @@
     {
         "uuid": "bbb590b7-e4b9-465d-8e0b-b8d6e6c4d6f0",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 1, 1, 2],
             [3, 3, 1, 2],
@@ -342,7 +342,7 @@
     {
         "uuid": "26b141e6-ed91-4541-af94-d6206493c023",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 1, 1, 2],
             [3, 3, 1, 2],
@@ -354,7 +354,7 @@
     {
         "uuid": "2ac5f040-dff7-46ad-906b-0b37c26aa16e",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [2, 3, 3, 4],
@@ -366,7 +366,7 @@
     {
         "uuid": "57feeb00-f43b-469a-b127-b9e787b0fe85",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [2, 3, 3, 4],
@@ -378,7 +378,7 @@
     {
         "uuid": "347645ba-be81-49af-8ed4-41b4d1be3dce",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 2],
             [3, 1, 1, 2],
@@ -390,7 +390,7 @@
     {
         "uuid": "9c5cea80-5b47-4777-97cf-73e70e669abe",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 2],
             [3, 1, 1, 2],
@@ -402,7 +402,7 @@
     {
         "uuid": "32bbb66f-ead9-48fc-9575-13d3fa802605",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [2, 3, 3, 1],
@@ -414,7 +414,7 @@
     {
         "uuid": "b4cdf3ee-60a5-48d5-bee8-1d6766d123d0",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [2, 3, 3, 1],
@@ -426,7 +426,7 @@
     {
         "uuid": "80f9ed49-2ac0-4135-a29d-e78eaeeceb33",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 2],
             [0, 3, 1, 2],
@@ -438,7 +438,7 @@
     {
         "uuid": "16bb4176-8c49-440a-b4a5-4633d7a24d2d",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 2],
             [0, 3, 1, 2],
@@ -450,7 +450,7 @@
     {
         "uuid": "33d07c29-962f-4dda-bcf4-bc563df76a66",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [0, 2, 2, 1],
@@ -462,7 +462,7 @@
     {
         "uuid": "b6765101-8976-499b-93e0-2b0b3f3a6107",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 1],
             [0, 2, 2, 1],
@@ -474,7 +474,7 @@
     {
         "uuid": "29b0c02c-4379-4792-bccd-84ed515416d8",
         "order": 4,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [],
             [],
@@ -486,7 +486,7 @@
     {
         "uuid": "21b78dcd-823c-4888-9bf7-21b25d3ff5b7",
         "order": 6,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 1, 2, 3, 3],
             [4, 5, 1, 2, 6, 7],
@@ -500,7 +500,7 @@
     {
         "uuid": "a275a337-6d70-48f9-b26e-821fdf65eff9",
         "order": 6,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [0, 0, 0, 1, 1, 2],
             [3, 4, 4, 5, 5, 2],
@@ -514,7 +514,7 @@
     {
         "uuid": "2efeb7d6-83a8-4d71-bc88-ac3f03bbba30",
         "order": 6,
-        "operator": "*",
+        "operator": "x",
         "cells": [
             [],
             [],

@@ -1,5 +1,6 @@
 let score = 0;
-let currentLevel = 40;
+// let currentLevel = 40;
+let currentLevel = 3;
 
 
 function trueModulo(x, y) {
@@ -95,11 +96,18 @@ class TitleScene extends Phaser.Scene {
     }
 }
 
+const operatorSymbol = {
+    '+': '+',
+    'x': '\u00d7',
+    '*': '*',
+};
+
 class PlayScene extends Phaser.Scene {
 
     level = null;
     table = null;
     operator = null;
+    operatorText = null;
     cages = null;
     cellLength = 80;
     // cellColor = 0x888888;
@@ -145,6 +153,16 @@ class PlayScene extends Phaser.Scene {
                 this.cages[cageId].coords.push([i, j]);
             }
         }
+
+        this.operatorText = this.add.text(
+            40,
+            40,
+            operatorSymbol[this.level.operator],
+            {font: '30px Courier',
+             fill: '#ffffff'}
+        ).setOrigin(0.5, 0.5);
+        console.log(`this.level.operator = ${this.level.operator}`);
+        console.log(operatorSymbol[this.level.operator]);
 
         /** Cells **/
         const paddedCellLength = this.cellLength + 4;
@@ -452,7 +470,7 @@ class PlayScene extends Phaser.Scene {
         if (this.level.operator === '+') {
             baseVal = 0;
             opFunc = (a, b) => parseInt(a) + parseInt(b);
-        } else if (this.level.operator === '*') {
+        } else if (this.level.operator === 'x') {
             baseVal = 1;
             opFunc = (a, b) => parseInt(a) * parseInt(b);
         }
