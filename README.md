@@ -3,7 +3,7 @@ grudoku
 
 Group based puzzle game similar to calcudoku.
 
-This game is an implementation of the puzzles described in *The Group Theory Puzzle Book* by David Nacin.  The calcudoku style puzzles require that each element appear only once per row and column.  On top of that, each enclosed cage should combine its elements to produce the clue provided in the top-right corner.  For example, if the operator is "addition", the element set is {1, 2, 3, 4}, and a 2-element cage has clue "3", the two elements will definitely be "1" and "2".  Sometimes there are single-cell cages, and they will just contain the element specified in the clue.
+This game is an implementation of the puzzles described in *The Group Theory Puzzle Book* by David Nacin.  Calcudoku puzzles have a [latin square](https://en.wikipedia.org/wiki/Latin_square) structure: each element can appear only once per row and once per column.  On top of that, each enclosed cage should combine its elements to produce the clue provided in the top-right corner.  For example, if the operator is "addition", the element set is {1, 2, 3, 4}, and a 2-element cage has clue "3", the two elements will definitely be "1" and "2".  Sometimes there are single-cell cages, and they will just contain the element specified in the clue.
 
 
 Controls
