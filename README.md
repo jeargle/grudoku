@@ -10,9 +10,9 @@ Controls
 --------
 
 * mouse left-click - select/deselect table cell
-* 1-9 - enter number into selected cell
-* backspace - clear selected cell
 * arrow keys - move cell selection
+* 0-9 - enter number into selected cell
+* backspace - clear selected cell
 
 
 How to Run
