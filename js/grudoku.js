@@ -1,10 +1,26 @@
 let score = 0;
-// let currentLevel = 40;
-let currentLevel = 2;
+// let currentLevel = 0;
+// let currentLevel = 20;
+// let currentLevel = 42;
+let currentLevel = 43;
 
 
-function trueModulo(x, y) {
+function mod(x, y) {
   return ((x % y) + y) % y;
+}
+
+function range(x, y) {
+    let start = 1;
+    let end = x;
+
+    if (y != null) {
+        start = x;
+        end = y;
+    }
+
+    const size = end - start + 1;
+
+    return [...Array(size).keys()].map(i => i + start);
 }
 
 class BootScene extends Phaser.Scene {
@@ -102,12 +118,25 @@ const operatorSymbol = {
     '*': '*',
 };
 
+const groupSymbol = {
+    'Z4': 'Z\u2084',
+    'Z5': 'Z\u2085',
+    'Z6': 'Z\u2086',
+    'Z7': 'Z\u2087',
+    'Z8': 'Z\u2088',
+    'U(5)': 'U(5)',
+    'U(10)': 'U(10)',
+    'U(7)': 'U(7)',
+    'U(9)': 'U(9)',
+};
+
 class PlayScene extends Phaser.Scene {
 
     level = null;
     table = null;
-    operator = null;
+    elements = [];
     operatorText = null;
+    groupText = null;
     cages = null;
     cellLength = 80;
     // cellColor = 0x888888;
@@ -163,8 +192,28 @@ class PlayScene extends Phaser.Scene {
             {font: '30px Courier',
              fill: '#ffffff'}
         ).setOrigin(0.5, 0.5);
+        this.groupText = this.add.text(
+            440,
+            40,
+            groupSymbol[this.level.group],
+            {font: '30px Courier',
+             fill: '#ffffff'}
+        ).setOrigin(0.5, 0.5);
         console.log(`this.level.operator = ${this.level.operator}`);
         console.log(operatorSymbol[this.level.operator]);
+        console.log(`this.level.group = ${this.level.group}`);
+
+        /** Elements **/
+        const group = this.level.group;
+        if (group == null) {
+            this.elements = range(order);
+        } else {
+            if (group[0] === 'Z') {
+                // Cyclic group
+                const modBase = parseInt(group.slice(1));
+                this.elements = range(0, modBase-1);
+            }
+        }
 
         /** Cells **/
         const paddedCellLength = this.cellLength + 4;
@@ -368,51 +417,52 @@ class PlayScene extends Phaser.Scene {
             moveAccepted = false;
             changeCell = false
 
-            // if (this.keyControls.zero.isDown && this.level.order >= 0) {
-            //     this.selectedCell.data.text.text = '0';
-            // }
+            if (this.keyControls.zero.isDown && this.elements.includes(0)) {
+                this.selectedCell.data.text.text = '0';
+                moveAccepted = true;
+            }
 
-            if (this.keyControls.one.isDown && this.level.order >= 1) {
+            if (this.keyControls.one.isDown && this.elements.includes(1)) {
                 this.selectedCell.data.text.text = '1';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.two.isDown && this.level.order >= 2) {
+            if (this.keyControls.two.isDown && this.elements.includes(2)) {
                 this.selectedCell.data.text.text = '2';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.three.isDown && this.level.order >= 3) {
+            if (this.keyControls.three.isDown && this.elements.includes(3)) {
                 this.selectedCell.data.text.text = '3';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.four.isDown && this.level.order >= 4) {
+            if (this.keyControls.four.isDown && this.elements.includes(4)) {
                 this.selectedCell.data.text.text = '4';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.five.isDown && this.level.order >= 5) {
+            if (this.keyControls.five.isDown && this.elements.includes(5)) {
                 this.selectedCell.data.text.text = '5';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.six.isDown && this.level.order >= 6) {
+            if (this.keyControls.six.isDown && this.elements.includes(6)) {
                 this.selectedCell.data.text.text = '6';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.seven.isDown && this.level.order >= 7) {
+            if (this.keyControls.seven.isDown && this.elements.includes(7)) {
                 this.selectedCell.data.text.text = '7';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.eight.isDown && this.level.order >= 8) {
+            if (this.keyControls.eight.isDown && this.elements.includes(8)) {
                 this.selectedCell.data.text.text = '8';
                 moveAccepted = true;
             }
 
-            if (this.keyControls.nine.isDown && this.level.order >= 9) {
+            if (this.keyControls.nine.isDown && this.elements.includes(9)) {
                 this.selectedCell.data.text.text = '9';
                 moveAccepted = true;
             }
@@ -432,29 +482,29 @@ class PlayScene extends Phaser.Scene {
             if (now > this.nextMoveTime) {
                 if (this.keyControls.up.isDown) {
                     changeCell = true;
-                    nextRow = trueModulo(nextRow - 1, this.level.order);
+                    nextRow = mod(nextRow - 1, this.level.order);
                 }
 
                 if (this.keyControls.down.isDown) {
                     changeCell = true;
-                    nextRow = trueModulo(nextRow + 1, this.level.order);
+                    nextRow = mod(nextRow + 1, this.level.order);
                 }
 
                 if (this.keyControls.left.isDown) {
                     changeCell = true;
-                    nextCol = trueModulo(nextCol - 1, this.level.order);
+                    nextCol = mod(nextCol - 1, this.level.order);
                 }
 
                 if (this.keyControls.right.isDown) {
                     changeCell = true;
-                    nextCol = trueModulo(nextCol + 1, this.level.order);
+                    nextCol = mod(nextCol + 1, this.level.order);
                 }
 
                 if (changeCell) {
                     const nextCell = this.table[nextRow][nextCol].cell;
                     this.deactivateCell();
                     this.activateCell(nextCell);
-                    this.nextMoveTime = now + 100;
+                    this.nextMoveTime = now + 200;
                 }
             }
         }
@@ -467,14 +517,25 @@ class PlayScene extends Phaser.Scene {
     verifyCage(cageId) {
         // console.log(`verifyCage(${cageId})`);
         let baseVal, opFunc;
+        const group = this.level.group;
         const cage = this.cages[cageId];
 
-        if (this.level.operator === '+') {
-            baseVal = 0;
-            opFunc = (a, b) => parseInt(a) + parseInt(b);
-        } else if (this.level.operator === 'x') {
-            baseVal = 1;
-            opFunc = (a, b) => parseInt(a) * parseInt(b);
+
+        if (group == null) {
+            if (this.level.operator === '+') {
+                baseVal = 0;
+                opFunc = (a, b) => parseInt(a) + parseInt(b);
+            } else if (this.level.operator === 'x') {
+                baseVal = 1;
+                opFunc = (a, b) => parseInt(a) * parseInt(b);
+            }
+        } else {
+            if (group[0] === 'Z') {
+                // Cyclic group
+                baseVal = 0;
+                const modBase = parseInt(group.slice(1));
+                opFunc = (a, b) => mod(parseInt(a) + parseInt(b), modBase);
+            }
         }
 
         const values = cage.coords.map(coord => {
