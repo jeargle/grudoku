@@ -2,7 +2,8 @@ let score = 0;
 // let currentLevel = 0;
 // let currentLevel = 20;
 // let currentLevel = 42;
-let currentLevel = 43;
+// let currentLevel = 48;
+let currentLevel = 0;
 
 
 function mod(x, y) {
@@ -138,6 +139,10 @@ class PlayScene extends Phaser.Scene {
     operatorText = null;
     groupText = null;
     cages = null;
+    barColor = 0xFFFFFF;
+    barErrorColor = 0xEE0000;
+    barWidth = 2;
+    textErrorColor = '0xEE0000';
     cellLength = 80;
     // cellColor = 0x888888;
     cellColor = 0x333333;
@@ -206,7 +211,7 @@ class PlayScene extends Phaser.Scene {
         /** Elements **/
         const group = this.level.group;
         if (group == null) {
-            this.elements = range(order);
+            this.elements = range(this.level.order);
         } else {
             if (group[0] === 'Z') {
                 // Cyclic group
@@ -325,17 +330,18 @@ class PlayScene extends Phaser.Scene {
         const cell = element.cell;
         const x = cell.x;
         const y = cell.y;
-        const lineColor = 0xFFFFFF;
-        const lineWidth = 2;
+        // const lineColor = 0xFFFFFF;
+        // const lineWidth = 2;
 
         // North
         if (row === 0) {
-            const startX = x - this.cellLength/2 - lineWidth;
-            const startY = y - this.cellLength/2 - lineWidth;
-            const endX = startX + this.cellLength + lineWidth*2;
+            const startX = x - this.cellLength/2 - this.barWidth;
+            const startY = y - this.cellLength/2 - this.barWidth;
+            const endX = startX + this.cellLength + this.barWidth*2;
             const endY = startY;
-            bars.north = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
-            bars.north.lineWidth = lineWidth;
+            bars.north = this.add.line(0, 0, startX, startY, endX, endY, this.barColor).setOrigin(0);
+            bars.north.lineWidth = this.barWidth;
+            bars.north.setData({errorCount: 0});
         } else {
             bars.north = this.table[row-1][column].bars.south;
         }
@@ -343,33 +349,36 @@ class PlayScene extends Phaser.Scene {
         // East
         const eastCageId = this.table[row][column+1]?.cageId;
         if (column === this.level.order-1 || cageId !== eastCageId) {
-            const startX = x + this.cellLength/2 + lineWidth;
-            const startY = y - this.cellLength/2 - lineWidth;
+            const startX = x + this.cellLength/2 + this.barWidth;
+            const startY = y - this.cellLength/2 - this.barWidth;
             const endX = startX;
-            const endY = startY + this.cellLength + lineWidth*2;
-            bars.east = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
-            bars.east.lineWidth = lineWidth;
+            const endY = startY + this.cellLength + this.barWidth*2;
+            bars.east = this.add.line(0, 0, startX, startY, endX, endY, this.barColor).setOrigin(0);
+            bars.east.lineWidth = this.barWidth;
+            bars.east.setData({errorCount: 0});
         }
 
         // South
         const southCageId =  this.table[row+1]?.[column].cageId;
         if (row === this.level.order-1 || cageId !== southCageId) {
-            const startX = x - this.cellLength/2 - lineWidth;
-            const startY = y + this.cellLength/2 + lineWidth;
-            const endX = startX + this.cellLength + lineWidth*2;
+            const startX = x - this.cellLength/2 - this.barWidth;
+            const startY = y + this.cellLength/2 + this.barWidth;
+            const endX = startX + this.cellLength + this.barWidth*2;
             const endY = startY;
-            bars.south = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
-            bars.south.lineWidth = lineWidth;
+            bars.south = this.add.line(0, 0, startX, startY, endX, endY, this.barColor).setOrigin(0);
+            bars.south.lineWidth = this.barWidth;
+            bars.south.setData({errorCount: 0});
         }
 
         // West
         if (column === 0) {
-            const startX = x - this.cellLength/2 - lineWidth;
-            const startY = y - this.cellLength/2 - lineWidth;
+            const startX = x - this.cellLength/2 - this.barWidth;
+            const startY = y - this.cellLength/2 - this.barWidth;
             const endX = startX;
-            const endY = startY + this.cellLength + lineWidth*2;
-            bars.west = this.add.line(0, 0, startX, startY, endX, endY, lineColor).setOrigin(0);
-            bars.west.lineWidth = lineWidth;
+            const endY = startY + this.cellLength + this.barWidth*2;
+            bars.west = this.add.line(0, 0, startX, startY, endX, endY, this.barColor).setOrigin(0);
+            bars.west.lineWidth = this.barWidth;
+            bars.west.setData({errorCount: 0});
         } else {
             bars.west = this.table[row][column-1].bars.east;
         }
@@ -514,12 +523,57 @@ class PlayScene extends Phaser.Scene {
         }
     }
 
+    setErrorBar(bar, error) {
+        console.log('setErrorBar()');
+        console.log('errorCount: ' + bar.data.values.errorCount);
+        console.log(error);
+        const oldErrorCount = bar.data.values.errorCount;
+
+        if (error) {
+            bar.setData({errorCount: oldErrorCount + 1})
+            if (oldErrorCount === 0) {
+                bar.setStrokeStyle(this.barWidth, this.barErrorColor);
+            }
+        } else {
+            bar.setData({errorCount: oldErrorCount - 1})
+            if (bar.data.values.errorCount === 0) {
+                bar.setStrokeStyle(this.barWidth, this.barColor);
+            }
+        }
+    }
+
+    setErrorBars(cageId, error = true) {
+        const cageCoordsList = this.cages[cageId].coords;
+        const i = cageCoordsList[0][0];
+        const j = cageCoordsList[0][1];
+        const clueText = this.table[i][j].cell.data.clueText;
+
+        if (error) {
+            // Cannot use variables for color, here!!!
+            clueText.setFill('#ee0000');
+        } else {
+            // Cannot use variables for color, here!!!
+            clueText.setFill('#ffffff');
+        }
+
+        cageCoordsList.forEach(coords => {
+            const row = coords[0];
+            const column = coords[1];
+            ['north', 'south', 'east', 'west'].forEach(barDir => {
+                const bar = this.table[row][column].bars[barDir];
+                if (bar != null) {
+                    this.setErrorBar(bar, error);
+                }
+            });
+        });
+    }
+
     verifyCage(cageId) {
         // console.log(`verifyCage(${cageId})`);
         let baseVal, opFunc;
         const group = this.level.group;
         const cage = this.cages[cageId];
-
+        const oldCageState = cage.state;
 
         if (group == null) {
             if (this.level.operator === '+') {
@@ -545,6 +599,9 @@ class PlayScene extends Phaser.Scene {
         if (values.includes(this.cellEmptyText) ||
             values.includes(this.cellActiveText)) {
             cage.state = 'active';
+            if (oldCageState === 'error') {
+                this.setErrorBars(cageId, false);
+            }
             return cage.state;
         }
 
@@ -554,8 +611,14 @@ class PlayScene extends Phaser.Scene {
 
         if (total === cage.clue) {
             cage.state = 'done';
+            if (oldCageState === 'error') {
+                this.setErrorBars(cageId, false);
+            }
         } else {
             cage.state = 'error';
+            if (oldCageState !== 'error') {
+                this.setErrorBars(cageId);
+            }
         }
 
         return cage.state;
