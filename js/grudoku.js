@@ -109,7 +109,43 @@ class TitleScene extends Phaser.Scene {
 
     start() {
         console.log('[TITLE] start');
-        game.scene.switch('title', 'play');
+        game.scene.switch('title', 'levelSelect');
+    }
+}
+
+class LevelSelectScene extends Phaser.Scene {
+    constructor() {
+        super('levelSelect');
+    }
+
+    init(config) {
+        console.log('[LEVEL SELECT] init', config);
+    }
+
+    preload() {
+        console.log('[LEVEL SELECT] preload');
+    }
+
+    create() {
+        this.add.text(80, 160, 'GRUDOKU',
+                      {font: '50px Courier',
+                       fill: '#ffffff'});
+        this.add.text(80, 240, 'press "S" to start',
+                      {font: '30px Courier',
+                       fill: '#ffffff'});
+
+        const levels = this.cache.json.get('levels');
+
+        this.input.keyboard.on('keydown-S', this.start, this);
+    }
+
+    update() {
+        console.log('[LEVEL SELECT] update');
+    }
+
+    start() {
+        console.log('[LEVEL SELECT] start');
+        game.scene.switch('levelSelect', 'play');
     }
 }
 
@@ -713,6 +749,7 @@ const gameConfig = {
         BootScene,
         LoadScene,
         TitleScene,
+        LevelSelectScene,
         PlayScene,
         EndScene
     ]
