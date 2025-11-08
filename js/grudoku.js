@@ -1,9 +1,8 @@
 let score = 0;
-// let currentLevel = 0;
-// let currentLevel = 20;
-// let currentLevel = 42;
-// let currentLevel = 48;
-let currentLevel = 0;
+// let currentLevel = "2209124b-7858-42b1-be44-5ccb8e9c0dd1";  // 4x4 +
+// let currentLevel = "ceb259aa-fdfc-4e71-9cbe-b6459db2684f";  // 6x6 +
+// let currentLevel = "13bd0d28-83ff-48f5-8651-6975a43389c2";  // 4x4 x
+let currentLevel = "392566c0-7dd2-4595-841e-5571a15fa662";  // Z4
 
 
 function mod(x, y) {
@@ -127,6 +126,7 @@ class LevelSelectScene extends Phaser.Scene {
     }
 
     create() {
+        console.log('[LEVEL SELECT] create');
         this.add.text(80, 160, 'GRUDOKU',
                       {font: '50px Courier',
                        fill: '#ffffff'});
@@ -136,11 +136,56 @@ class LevelSelectScene extends Phaser.Scene {
 
         const levels = this.cache.json.get('levels');
 
+        /** Level Boxes **/
+        levels.forEach(level => {
+            console.log(level.uuid);
+            // this.createLevelBox(level.uuid);
+        });
+
         this.input.keyboard.on('keydown-S', this.start, this);
     }
 
     update() {
         console.log('[LEVEL SELECT] update');
+    }
+
+    createLevelBox(levelUuid, position) {
+        console.log(`${levelUuid}, (${position.x}, ${position.y})`);
+
+        const that = this;
+        let box = this.add.rectangle(
+            position.x,
+            position.y,
+            this.boxLength,
+            this.boxLength,
+            this.boxColor
+        );
+
+        let text = this.add.text(
+            position.x,
+            position.y,
+            this.boxEmptyText,
+            {font: '30px Courier',
+             fill: '#ffffff'}
+        ).setOrigin(0.5, 0.5);
+
+        box.setInteractive();
+        box.setStrokeStyle(4, 0x333333);
+        box.data = {
+            state: 'off',
+            uuid: levelUuid,
+            text,
+        };
+
+        box.on('pointerdown', function (pointer, localX, localY, event) {
+            const boxWasOff = box.data.state === 'off';
+            that.deactivateBox();
+            if (boxWasOff) {
+                that.activateBox(box);
+            }
+        });
+
+        return box;
     }
 
     start() {
@@ -169,6 +214,7 @@ const groupSymbol = {
 
 class PlayScene extends Phaser.Scene {
 
+    uuidToLevel = {};
     level = null;
     table = null;
     elements = [];
@@ -199,8 +245,12 @@ class PlayScene extends Phaser.Scene {
 
         /** Level **/
         const levels = this.cache.json.get('levels');
-        this.level = levels[currentLevel];
-        console.log(`this.level.uuid = ${this.level.uuid}`);
+        levels.forEach(level => {
+            this.uuidToLevel[level.uuid] = level;
+        });
+        // this.level = levels[currentLevel];
+        this.level = this.uuidToLevel[currentLevel];
+        // console.log(`this.level.uuid = ${this.level.uuid}`);
 
         /** Table **/
         this.table = Array(this.level.order);
