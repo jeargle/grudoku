@@ -113,6 +113,11 @@ class TitleScene extends Phaser.Scene {
 }
 
 class LevelSelectScene extends Phaser.Scene {
+
+    boxLength = 40;
+    boxColor = 0x663300;
+    selectedBox = null;
+
     constructor() {
         super('levelSelect');
     }
@@ -127,19 +132,32 @@ class LevelSelectScene extends Phaser.Scene {
 
     create() {
         console.log('[LEVEL SELECT] create');
-        this.add.text(80, 160, 'GRUDOKU',
+        this.add.text(80, 60, 'GRUDOKU',
                       {font: '50px Courier',
                        fill: '#ffffff'});
-        this.add.text(80, 240, 'press "S" to start',
+        this.add.text(80, 140, 'press "S" to start',
                       {font: '30px Courier',
                        fill: '#ffffff'});
 
         const levels = this.cache.json.get('levels');
 
         /** Level Boxes **/
+        let row = 0;
+        let column = -1;
+        let paddedBoxLength = 44;
         levels.forEach(level => {
-            console.log(level.uuid);
-            // this.createLevelBox(level.uuid);
+            // console.log(level.uuid);
+            column += 1;
+            if (column >= 12) {
+                row += 1;
+                column = 0;
+            }
+            const position = new Phaser.Math.Vector2(
+                100 + column*paddedBoxLength,
+                200 + row*paddedBoxLength
+            );
+
+            this.createLevelBox(level.uuid, position);
         });
 
         this.input.keyboard.on('keydown-S', this.start, this);
@@ -170,7 +188,7 @@ class LevelSelectScene extends Phaser.Scene {
         ).setOrigin(0.5, 0.5);
 
         box.setInteractive();
-        box.setStrokeStyle(4, 0x333333);
+        // box.setStrokeStyle(4, 0x333333);
         box.data = {
             state: 'off',
             uuid: levelUuid,
@@ -186,6 +204,33 @@ class LevelSelectScene extends Phaser.Scene {
         });
 
         return box;
+    }
+
+    activateBox(box) {
+        box.data.state = 'on';
+        box.setFillStyle(0xbbbbbb);
+        this.selectedBox = box;
+        if (box.data.text.text === this.boxEmptyText) {
+            box.data.text.text = this.boxActiveText;
+        }
+
+        // console.log(`(${box.data.row}, ${box.data.column})`);
+        // console.log(`${box.data.text.text} - ${box.data.clue}`);
+        console.log(`${box.data.uuid}`);
+        currentLevel = box.data.uuid;
+    }
+
+    deactivateBox() {
+        if (this.selectedBox == null) {
+            return;
+        }
+
+        this.selectedBox.data.state = 'off';
+        this.selectedBox.setFillStyle(this.boxColor);
+        if (this.selectedBox.data.text.text === this.boxActiveText) {
+            this.selectedBox.data.text.text = this.boxEmptyText;
+        }
+        this.selectedBox = null;
     }
 
     start() {
