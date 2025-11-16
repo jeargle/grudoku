@@ -280,13 +280,77 @@ class PlayScene extends Phaser.Scene {
 
     constructor() {
         super('play');
+
     }
 
     create() {
+        console.log('[PLAY] create');
         let i, j;
         let that = this;
 
+        // this.events.on('start', this.start, this);
+        // this.events.on('ready', this.ready, this);
+        // this.events.on('pause', this.pause, this);
+        // this.events.on('resume', this.resume, this);
+        this.events.on('sleep', this.sleep, this);
+        this.events.on('wake', this.wake, this);
+
         this.graphics = this.add.graphics();
+
+        this.createLevel();
+
+        /** Controls **/
+        this.keyControls = this.input.keyboard.addKeys({
+            'zero': Phaser.Input.Keyboard.KeyCodes.ZERO,
+            'one': Phaser.Input.Keyboard.KeyCodes.ONE,
+            'two': Phaser.Input.Keyboard.KeyCodes.TWO,
+            'three': Phaser.Input.Keyboard.KeyCodes.THREE,
+            'four': Phaser.Input.Keyboard.KeyCodes.FOUR,
+            'five': Phaser.Input.Keyboard.KeyCodes.FIVE,
+            'six': Phaser.Input.Keyboard.KeyCodes.SIX,
+            'seven': Phaser.Input.Keyboard.KeyCodes.SEVEN,
+            'eight': Phaser.Input.Keyboard.KeyCodes.EIGHT,
+            'nine': Phaser.Input.Keyboard.KeyCodes.NINE,
+            'backspace': Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
+            'up': Phaser.Input.Keyboard.KeyCodes.UP,
+            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
+            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'end': Phaser.Input.Keyboard.KeyCodes.E,
+        });
+
+        this.input.mouse.disableContextMenu();
+    }
+
+    start() {
+        console.log('[PLAY] start');
+    }
+
+    ready() {
+        console.log('[PLAY] ready');
+    }
+
+    pause() {
+        console.log('[PLAY] pause');
+    }
+
+    resume() {
+        console.log('[PLAY] resume');
+    }
+
+    sleep() {
+        console.log('[PLAY] sleep');
+    }
+
+    wake() {
+        console.log('[PLAY] wake');
+
+        this.createLevel();
+    }
+
+    createLevel() {
+        let i, j;
+        let that = this;
 
         /** Level **/
         const levels = this.cache.json.get('levels');
@@ -369,28 +433,6 @@ class PlayScene extends Phaser.Scene {
                 this.table[i][j].bars = this.createBars(i, j);
             });
         });
-
-        /** Controls **/
-        this.keyControls = this.input.keyboard.addKeys({
-            'zero': Phaser.Input.Keyboard.KeyCodes.ZERO,
-            'one': Phaser.Input.Keyboard.KeyCodes.ONE,
-            'two': Phaser.Input.Keyboard.KeyCodes.TWO,
-            'three': Phaser.Input.Keyboard.KeyCodes.THREE,
-            'four': Phaser.Input.Keyboard.KeyCodes.FOUR,
-            'five': Phaser.Input.Keyboard.KeyCodes.FIVE,
-            'six': Phaser.Input.Keyboard.KeyCodes.SIX,
-            'seven': Phaser.Input.Keyboard.KeyCodes.SEVEN,
-            'eight': Phaser.Input.Keyboard.KeyCodes.EIGHT,
-            'nine': Phaser.Input.Keyboard.KeyCodes.NINE,
-            'backspace': Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
-            'up': Phaser.Input.Keyboard.KeyCodes.UP,
-            'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
-            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
-            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            'end': Phaser.Input.Keyboard.KeyCodes.E,
-        });
-
-        this.input.mouse.disableContextMenu();
     }
 
     createCell(position, row, column) {
@@ -543,7 +585,7 @@ class PlayScene extends Phaser.Scene {
     }
 
     update() {
-        // console.log('[PLAY] update');
+        console.log('[PLAY] update');
         let row, col, nextRow, nextCol, cageId, cage, moveAccepted, changeCell;
 
         const now = this.time.now;
