@@ -468,7 +468,7 @@ class PlayScene extends Phaser.Scene {
 
         cell.setInteractive();
         cell.setStrokeStyle(4, 0x333333);
-        cell.data = {
+        cell.data2 = {
             state: 'off',
             row,
             column,
@@ -478,7 +478,7 @@ class PlayScene extends Phaser.Scene {
         };
 
         cell.on('pointerdown', function (pointer, localX, localY, event) {
-            const cellWasOff = cell.data.state === 'off';
+            const cellWasOff = cell.data2.state === 'off';
             that.deactivateCell();
             if (cellWasOff) {
                 that.activateCell(cell);
@@ -560,15 +560,31 @@ class PlayScene extends Phaser.Scene {
     }
 
     activateCell(cell) {
-        cell.data.state = 'on';
+        cell.data2.state = 'on';
         cell.setFillStyle(0xbbbbbb);
         this.selectedCell = cell;
-        if (cell.data.text.text === this.cellEmptyText) {
-            cell.data.text.text = this.cellActiveText;
+        if (cell.data2.text.text === this.cellEmptyText) {
+            cell.data2.text.text = this.cellActiveText;
         }
 
-        console.log(`(${cell.data.row}, ${cell.data.column})`);
-        console.log(`${cell.data.text.text} - ${cell.data.clue}`);
+        console.log(`(${cell.data2.row}, ${cell.data2.column})`);
+        console.log(`${cell.data2.text.text} - ${cell.data2.clue}`);
+    }
+
+    destroyLevel() {
+        this.operatorText.destroy();
+        this.groupText.destroy();
+
+        this.table.forEach((row, i) => {
+            row.forEach((el, j) => {
+                el.cell.data2.clueText?.destroy();
+                el.cell.data2.text?.destroy();
+                el.cell.destroy();
+            });
+        });
+
+        this.table = null;
+
     }
 
     deactivateCell() {
@@ -576,10 +592,10 @@ class PlayScene extends Phaser.Scene {
             return;
         }
 
-        this.selectedCell.data.state = 'off';
+        this.selectedCell.data2.state = 'off';
         this.selectedCell.setFillStyle(this.cellColor);
-        if (this.selectedCell.data.text.text === this.cellActiveText) {
-            this.selectedCell.data.text.text = this.cellEmptyText;
+        if (this.selectedCell.data2.text.text === this.cellActiveText) {
+            this.selectedCell.data2.text.text = this.cellEmptyText;
         }
         this.selectedCell = null;
     }
@@ -591,8 +607,8 @@ class PlayScene extends Phaser.Scene {
         const now = this.time.now;
 
         if (this.selectedCell != null) {
-            row = this.selectedCell.data.row;
-            col = this.selectedCell.data.column;
+            row = this.selectedCell.data2.row;
+            col = this.selectedCell.data2.column;
             nextRow = row;
             nextCol = col;
             cageId = this.table[row][col].cageId;
@@ -600,57 +616,57 @@ class PlayScene extends Phaser.Scene {
             changeCell = false
 
             if (this.keyControls.zero.isDown && this.elements.includes(0)) {
-                this.selectedCell.data.text.text = '0';
+                this.selectedCell.data2.text.text = '0';
                 moveAccepted = true;
             }
 
             if (this.keyControls.one.isDown && this.elements.includes(1)) {
-                this.selectedCell.data.text.text = '1';
+                this.selectedCell.data2.text.text = '1';
                 moveAccepted = true;
             }
 
             if (this.keyControls.two.isDown && this.elements.includes(2)) {
-                this.selectedCell.data.text.text = '2';
+                this.selectedCell.data2.text.text = '2';
                 moveAccepted = true;
             }
 
             if (this.keyControls.three.isDown && this.elements.includes(3)) {
-                this.selectedCell.data.text.text = '3';
+                this.selectedCell.data2.text.text = '3';
                 moveAccepted = true;
             }
 
             if (this.keyControls.four.isDown && this.elements.includes(4)) {
-                this.selectedCell.data.text.text = '4';
+                this.selectedCell.data2.text.text = '4';
                 moveAccepted = true;
             }
 
             if (this.keyControls.five.isDown && this.elements.includes(5)) {
-                this.selectedCell.data.text.text = '5';
+                this.selectedCell.data2.text.text = '5';
                 moveAccepted = true;
             }
 
             if (this.keyControls.six.isDown && this.elements.includes(6)) {
-                this.selectedCell.data.text.text = '6';
+                this.selectedCell.data2.text.text = '6';
                 moveAccepted = true;
             }
 
             if (this.keyControls.seven.isDown && this.elements.includes(7)) {
-                this.selectedCell.data.text.text = '7';
+                this.selectedCell.data2.text.text = '7';
                 moveAccepted = true;
             }
 
             if (this.keyControls.eight.isDown && this.elements.includes(8)) {
-                this.selectedCell.data.text.text = '8';
+                this.selectedCell.data2.text.text = '8';
                 moveAccepted = true;
             }
 
             if (this.keyControls.nine.isDown && this.elements.includes(9)) {
-                this.selectedCell.data.text.text = '9';
+                this.selectedCell.data2.text.text = '9';
                 moveAccepted = true;
             }
 
             if (this.keyControls.backspace.isDown) {
-                this.selectedCell.data.text.text = this.cellActiveText;
+                this.selectedCell.data2.text.text = this.cellActiveText;
                 moveAccepted = true;
             }
 
@@ -719,7 +735,7 @@ class PlayScene extends Phaser.Scene {
         const cageCoordsList = this.cages[cageId].coords;
         const i = cageCoordsList[0][0];
         const j = cageCoordsList[0][1];
-        const clueText = this.table[i][j].cell.data.clueText;
+        const clueText = this.table[i][j].cell.data2.clueText;
 
         if (error) {
             // Cannot use variables for color, here!!!
@@ -766,7 +782,7 @@ class PlayScene extends Phaser.Scene {
         }
 
         const values = cage.coords.map(coord => {
-            return this.table[coord[0]][coord[1]].cell.data.text.text;
+            return this.table[coord[0]][coord[1]].cell.data2.text.text;
         });
 
         if (values.includes(this.cellEmptyText) ||
@@ -819,7 +835,7 @@ class PlayScene extends Phaser.Scene {
             usedRowElements.clear();
             usedColumnElements.clear();
             for (j=0; j<this.level.order; j++) {
-                rowElement = this.table[i][j].cell.data.text.text;
+                rowElement = this.table[i][j].cell.data2.text.text;
                 if (usedRowElements.has(rowElement)) {
                     this.state = 'error';
                     return this.state;
@@ -827,7 +843,7 @@ class PlayScene extends Phaser.Scene {
                     usedRowElements.add(rowElement);
                 }
 
-                columnElement = this.table[j][i].cell.data.text.text;
+                columnElement = this.table[j][i].cell.data2.text.text;
                 if (usedColumnElements.has(columnElement)) {
                     this.state = 'error';
                     return this.state;
@@ -843,6 +859,8 @@ class PlayScene extends Phaser.Scene {
 
     end() {
         console.log('[PLAY] end');
+
+        this.destroyLevel();
         game.scene.switch('play', 'end');
     }
 }
