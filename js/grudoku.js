@@ -575,16 +575,24 @@ class PlayScene extends Phaser.Scene {
         this.operatorText.destroy();
         this.groupText.destroy();
 
+        // Destroy cells and bars.
         this.table.forEach((row, i) => {
             row.forEach((el, j) => {
+                // Destroy cell.
                 el.cell.data2.clueText?.destroy();
                 el.cell.data2.text?.destroy();
                 el.cell.destroy();
+
+                // Destroy bars.
+                for (const [direction, bar] of Object.entries(el.bars)) {
+                    if (bar != null) {
+                        bar.destroy();
+                    }
+                }
             });
         });
 
         this.table = null;
-
     }
 
     deactivateCell() {
