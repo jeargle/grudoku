@@ -317,6 +317,7 @@ class PlayScene extends Phaser.Scene {
             'down': Phaser.Input.Keyboard.KeyCodes.DOWN,
             'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
             'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            'tentative': Phaser.Input.Keyboard.KeyCodes.T,
             'end': Phaser.Input.Keyboard.KeyCodes.E,
         });
 
@@ -476,6 +477,7 @@ class PlayScene extends Phaser.Scene {
         cell.setStrokeStyle(4, 0x333333);
         cell.data2 = {
             state: 'off',
+            tentative: false,
             row,
             column,
             text,
@@ -710,6 +712,18 @@ class PlayScene extends Phaser.Scene {
                 if (this.keyControls.right.isDown) {
                     changeCell = true;
                     nextCol = mod(nextCol + 1, this.level.order);
+                }
+
+                if (this.keyControls.tentative.isDown) {
+                    console.log('tentative');
+                    changeCell = true;
+                    if (this.selectedCell.data2.text.tentative) {
+                        this.selectedCell.data2.text.tentative = false;
+                        this.selectedCell.data2.text.setFontStyle('');
+                    } else {
+                        this.selectedCell.data2.text.tentative = true;
+                        this.selectedCell.data2.text.setFontStyle('italic');
+                    }
                 }
 
                 if (changeCell) {
