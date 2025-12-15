@@ -262,6 +262,7 @@ class PlayScene extends Phaser.Scene {
     uuidToLevel = {};
     level = null;
     table = null;
+    tableOffset = null; // position of table's top-left corner
     elements = [];
     operatorText = null;
     groupText = null;
@@ -357,20 +358,23 @@ class PlayScene extends Phaser.Scene {
         levels.forEach(level => {
             this.uuidToLevel[level.uuid] = level;
         });
-        // this.level = levels[currentLevel];
         this.level = this.uuidToLevel[currentLevel];
         // console.log(`this.level.uuid = ${this.level.uuid}`);
 
         /** Table **/
         this.table = Array(this.level.order);
+        this.tableOffset = new Phaser.Math.Vector2(100, 100);
         this.cages = {};
         let usedCageIds = new Set();
+
         for (i=0; i<this.level.order; i++) {
             this.table[i] = Array(this.level.order);
+
             // Loop backwards to assign clues to top-right cage cells.
             for (j=this.level.order-1; j>=0; j--) {
                 const cageId = this.level.cells[i][j];
                 let clue = null;
+
                 if (!usedCageIds.has(cageId)) {
                     clue = this.level.clues[cageId];
                     usedCageIds.add(cageId);
@@ -380,6 +384,7 @@ class PlayScene extends Phaser.Scene {
                         clue
                     };
                 }
+
                 this.table[i][j] = {cageId, clue};
                 this.cages[cageId].coords.push([i, j]);
             }
@@ -392,6 +397,7 @@ class PlayScene extends Phaser.Scene {
             {font: '30px Courier',
              fill: '#ffffff'}
         ).setOrigin(0.5, 0.5);
+
         this.groupText = this.add.text(
             440,
             40,
@@ -399,6 +405,7 @@ class PlayScene extends Phaser.Scene {
             {font: '30px Courier',
              fill: '#ffffff'}
         ).setOrigin(0.5, 0.5);
+
         console.log(`this.level.operator = ${this.level.operator}`);
         console.log(operatorSymbol[this.level.operator]);
         console.log(`this.level.group = ${this.level.group}`);
@@ -419,10 +426,9 @@ class PlayScene extends Phaser.Scene {
         const paddedCellLength = this.cellLength + 4;
         this.table.forEach((row, i) => {
             row.forEach((el, j) => {
-                const position = new Phaser.Math.Vector2(
-                    100 + j*paddedCellLength,
-                    100 + i*paddedCellLength
-                );
+                const position = new Phaser.Math.Vector2(j, i)
+                      .scale(paddedCellLength)
+                      .add(this.tableOffset);
                 this.table[i][j].cell = this.createCell(position, i, j);
             });
         });
