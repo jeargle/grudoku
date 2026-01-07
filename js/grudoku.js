@@ -98,8 +98,12 @@ class TitleScene extends Phaser.Scene {
         this.add.text(80, 240, 'press "W" to start',
                       {font: '30px Courier',
                        fill: '#ffffff'});
+        this.add.text(80, 320, 'press "I" for instructions',
+                      {font: '30px Courier',
+                       fill: '#ffffff'});
 
         this.input.keyboard.on('keydown-W', this.start, this);
+        this.input.keyboard.on('keydown-I', this.instructions, this);
     }
 
     update() {
@@ -109,6 +113,54 @@ class TitleScene extends Phaser.Scene {
     start() {
         console.log('[TITLE] start');
         game.scene.switch('title', 'levelSelect');
+    }
+
+    instructions() {
+        console.log('[TITLE] instructions');
+        game.scene.switch('title', 'instructions');
+    }
+}
+
+class InstructionsScene extends Phaser.Scene {
+    constructor() {
+        super('instructions');
+    }
+
+    init(config) {
+        console.log('[INSTRUCTIONS] init', config);
+    }
+
+    preload() {
+        console.log('[INSTRUCTIONS] preload');
+    }
+
+    create() {
+        this.add.text(80, 160, 'GRUDOKU',
+                      {font: '50px Courier',
+                       fill: '#ffffff'});
+        this.add.text(80, 240, 'press "B" to go back',
+                      {font: '30px Courier',
+                       fill: '#ffffff'});
+
+        this.add.text(80, 320, 'Instructions: blah, blah, blah...',
+                      {font: '16px Courier',
+                       fill: '#ffffff'});
+
+        this.input.keyboard.on('keydown-B', this.back, this);
+    }
+
+    update() {
+        console.log('[INSTRUCTIONS] update');
+    }
+
+    back() {
+        console.log('[INSTRUCTIONS] back');
+        this.title();
+    }
+
+    title() {
+        console.log('[INSTRUCTIONS] title');
+        game.scene.switch('instructions', 'title');
     }
 }
 
@@ -932,6 +984,7 @@ const gameConfig = {
         BootScene,
         LoadScene,
         TitleScene,
+        InstructionsScene,
         LevelSelectScene,
         PlayScene,
         EndScene
