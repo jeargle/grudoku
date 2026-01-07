@@ -98,7 +98,7 @@ class TitleScene extends Phaser.Scene {
         this.add.text(80, 240, 'press "W" to start',
                       {font: '30px Courier',
                        fill: '#ffffff'});
-        this.add.text(80, 320, 'press "I" for instructions',
+        this.add.text(80, 280, 'press "I" for instructions',
                       {font: '30px Courier',
                        fill: '#ffffff'});
 
@@ -142,7 +142,24 @@ class InstructionsScene extends Phaser.Scene {
                       {font: '30px Courier',
                        fill: '#ffffff'});
 
-        this.add.text(80, 320, 'Instructions: blah, blah, blah...',
+
+        this.add.text(80, 300, 'INSTRUCTIONS\n' +
+                      '  Puzzles have a latin square structure: each element can appear\n' +
+                      '  only once per row and once per column. On top of that, each\n' +
+                      '  enclosed cage should combine its elements to produce the clue\n' +
+                      '  provided in the top-right corner. For example, if the operator is\n' +
+                      '  "addition", the element set is {1, 2, 3, 4}, and a 2-element cage\n' +
+                      '  has clue "3", the two elements will definitely be "1" and "2".\n' +
+                      '  Sometimes there are single-cell cages, and they will just contain\n' +
+                      '  the element specified in the clue.',
+                      {font: '16px Courier',
+                       fill: '#ffffff'});
+
+        this.add.text(80, 460, 'CONTROLS\n' +
+                      '  mouse left-click: select/deselect table cell\n' +
+                      '  arrow keys: move cell selection\n' +
+                      '  0-9: enter number into selected cell\n' +
+                      '  backspace: clear selected cell',
                       {font: '16px Courier',
                        fill: '#ffffff'});
 
